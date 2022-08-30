@@ -48,6 +48,32 @@ class Menu extends StatelessWidget {
                 ),
               ),
             ),
+            ListTile(
+              onTap: () => index.value = 2,
+              leading: Icon(
+                Icons.category,
+                color: index.value == 2 ? Colors.white : ThemeData.light().iconTheme.color,
+              ),
+              title: Text(
+                'Categories',
+                style: TextStyle(
+                  color: index.value == 2 ? Colors.white : ThemeData.light().iconTheme.color,
+                ),
+              ),
+            ),
+            ListTile(
+              onTap: () => index.value = 3,
+              leading: Icon(
+                Icons.people,
+                color: index.value == 3 ? Colors.white : ThemeData.light().iconTheme.color,
+              ),
+              title: Text(
+                'Customers',
+                style: TextStyle(
+                  color: index.value == 3 ? Colors.white : ThemeData.light().iconTheme.color,
+                ),
+              ),
+            ),
           ],
         ),
       ),

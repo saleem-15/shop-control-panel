@@ -2,10 +2,15 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shop_conrol_panel/screens/customers/customers_screen.dart';
 import 'package:shop_conrol_panel/screens/orders/orders_screen.dart';
 
 import 'components/menu.dart';
 import 'config/theme/my_theme.dart';
+import 'screens/category/categories_controller.dart';
+import 'screens/category/category_screen.dart';
+import 'screens/customers/customers_controller.dart';
+import 'screens/orders/orders_controller.dart';
 import 'screens/products/products_controller.dart';
 import 'screens/products/products_screen.dart';
 import 'storage/my_shared_pref.dart';
@@ -13,6 +18,9 @@ import 'storage/my_shared_pref.dart';
 Future<void> main() async {
   await MySharedPref.init();
   Get.lazyPut(() => ProductsController(), fenix: true);
+  Get.lazyPut(() => OrdersController(), fenix: true);
+  Get.lazyPut(() => CategoriesController(), fenix: true);
+  Get.lazyPut(() => CustomersController(), fenix: true);
   runApp(MyApp());
 }
 
@@ -57,9 +65,14 @@ class MyApp extends StatelessWidget {
                       builder: (context) {
                         switch (selectedIndex.value) {
                           case 0:
-                            return const OrdersScreen();
+                            return  OrdersScreen();
                           case 1:
                             return const ProductsScreen();
+                          case 2:
+                            return const CategoryScreen();
+
+                          case 3:
+                            return const CustomersScreen();
                           default:
                             return const ProductsScreen();
                         }

@@ -87,7 +87,7 @@ class MyStyles {
   // Chip theme
   static ChipThemeData getChipTheme({required bool isLightTheme}) {
     return ChipThemeData(
-      backgroundColor: Colors.transparent,
+      backgroundColor: isLightTheme ? LightThemeColors.chipBackground : DarkThemeColors.chipBackground,
       brightness: Brightness.light,
       labelStyle: getChipTextStyle(isLightTheme: isLightTheme),
       secondaryLabelStyle: getChipTextStyle(isLightTheme: isLightTheme).copyWith(color: Colors.white),

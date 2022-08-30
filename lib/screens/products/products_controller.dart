@@ -6,16 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../app_components/custom_snackbar.dart';
+import '../category/categories_controller.dart';
 
 class ProductsController extends GetxController {
   final List<File> list = <File>[].obs;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  final categories = [
-    'clothes',
-    'electronics',
-    'food',
-  ];
+ late final RxList<String> categories ;
 
   RxBool dragging = false.obs;
 
@@ -32,6 +29,7 @@ class ProductsController extends GetxController {
 
   @override
   void onInit() {
+  categories =   Get.find<CategoriesController>().categories;
     chosenCategory = categories.first.obs;
     super.onInit();
   }

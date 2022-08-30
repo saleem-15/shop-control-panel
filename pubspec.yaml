@@ -42,6 +42,7 @@ dependencies:
   desktop_drop: ^0.3.3
   drag_and_drop_windows: ^0.0.2
   dropdown_button2: ^1.7.2
+  pluto_grid: ^5.0.5
   # xfile: ^1.1.0
 
 dev_dependencies:

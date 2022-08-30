@@ -41,8 +41,8 @@ class LightThemeColors {
   static const Color hintTextColor = Color(0xff9e9e9e);
 
   //chip
-  static const Color chipBackground = primaryColor;
-  static const Color chipTextColor = Colors.black;
+  static const Color chipBackground = myBlack;
+  static const Color chipTextColor = Colors.white;
 
   // progress bar indicator
   static const Color progressIndicatorColor = Color(0xFF40A76A);

@@ -48,5 +48,5 @@ class MyFonts {
   static double get captionTextSize => 13;
 
   //chip font size
-  static double get chipTextSize => 10;
+  static double get chipTextSize => bodyLarge;
 }
