@@ -37,8 +37,10 @@ class DropImagesArea extends GetView<CategoriesController> {
         const SizedBox(
           height: 30,
         ),
-        Obx(
-          () => !controller.isImageExists
+        GetBuilder<CategoriesController>(
+          assignId: true,
+          id: 'category_photo',
+          builder: (controller) => !controller.isImageExists
               ? const SizedBox.shrink()
               : Container(
                   clipBehavior: Clip.antiAlias,
@@ -48,13 +50,9 @@ class DropImagesArea extends GetView<CategoriesController> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: GetBuilder<CategoriesController>(
-                    assignId: true,
-                    id: 'category_photo',
-                    builder: (controller) => Image.file(
-                      controller.image.value!,
-                      fit: BoxFit.cover,
-                    ),
+                  child: Image.file(
+                    controller.image.value!,
+                    fit: BoxFit.cover,
                   ),
                 ),
         )

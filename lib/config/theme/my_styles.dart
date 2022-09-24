@@ -104,6 +104,12 @@ class MyStyles {
     );
   }
 
+  //Drawer Theme (I use this theme for my custom menu)
+  static DrawerThemeData getDrawerThemeData({required bool isLightTheme}) => const DrawerThemeData(
+        backgroundColor: LightThemeColors.menuColor,
+        width: 200,
+      );
+
   ///Chips text style
   static TextStyle getChipTextStyle({required bool isLightTheme}) {
     return MyFonts.chipTextStyle.copyWith(
@@ -183,31 +189,7 @@ class MyStyles {
         color: isLightTheme ? LightThemeColors.dividerColor : DarkThemeColors.dividerColor,
       );
 
-  static InputDecorationTheme getInputDecorationTheme({required bool isLightTheme}) => InputDecorationTheme(
-        filled: true,
-        fillColor: searchTextfieldColor,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(13.r),
-          borderSide: const BorderSide(color: searchTextfieldColor, width: 1.5),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(13.r),
-          borderSide: const BorderSide(color: searchTextfieldColor, width: 1.5),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(13.r),
-          borderSide: const BorderSide(color: searchTextfieldColor, width: 1.5),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(13.r),
-          borderSide: const BorderSide(color: searchTextfieldColor, width: 1.5),
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(13.r),
-          borderSide: const BorderSide(color: searchTextfieldColor, width: 1.5),
-        ),
-      );
-
+  
   static getDialogTheme({required bool isLightTheme}) => DialogTheme(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.r),

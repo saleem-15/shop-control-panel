@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../products_controller.dart';
+import '../add_new_products_controller.dart';
 
-class EnterSize extends GetView<ProductsController> {
+class EnterSize extends GetView<AddNewProductsController> {
   const EnterSize({Key? key}) : super(key: key);
 
   @override

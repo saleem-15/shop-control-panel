@@ -26,7 +26,7 @@ class LightThemeColors {
 
   //ICONS
   static const Color appBarIconsColor = Colors.white;
-  static const Color iconColor = Colors.black;
+  static const Color iconColor = Color(0xff656E7A);
 
   //BUTTON
   static const Color buttonColor = myBlack;
@@ -49,4 +49,7 @@ class LightThemeColors {
 
   // Radio Button
   static const Color radioColor = primaryColor;
+
+  // Menu
+  static const Color menuColor = Color(0xff13171A);
 }

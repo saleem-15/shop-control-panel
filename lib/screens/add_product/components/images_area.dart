@@ -1,10 +1,9 @@
 import 'package:desktop_drop/desktop_drop.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shop_conrol_panel/screens/add_product/images_controller.dart';
 
-import '../products_controller.dart';
-
-class DropImagesArea extends GetView<ProductsController> {
+class DropImagesArea extends GetView<ImagesController> {
   const DropImagesArea({Key? key}) : super(key: key);
 
   @override
@@ -15,7 +14,7 @@ class DropImagesArea extends GetView<ProductsController> {
         DropTarget(
           onDragDone: (detail) => controller.onDragDone(detail),
           onDragEntered: (detail) => controller.onDragEntered(detail),
-          onDragExited: (detail) =>controller. onDragExited(detail),
+          onDragExited: (detail) => controller.onDragExited(detail),
           child: Obx(
             () => Card(
               clipBehavior: Clip.antiAlias,
@@ -27,7 +26,9 @@ class DropImagesArea extends GetView<ProductsController> {
                 color: controller.dragging.value ? Colors.blue.withOpacity(0.4) : Colors.black26,
                 child: Center(
                   child: Text(
-                    controller.list.isEmpty ? 'Drop Images here' : '${controller.list.length} Images',
+                    controller.imagesList.isEmpty
+                        ? 'Drop Images here'
+                        : '${controller.imagesList.length} Images',
                     style: Theme.of(context).textTheme.headline6,
                   ),
                 ),
@@ -44,7 +45,7 @@ class DropImagesArea extends GetView<ProductsController> {
           child: Obx(
             () => ListView(
               scrollDirection: Axis.horizontal,
-              children: controller.list
+              children: controller.imagesList
                   .map((e) => Container(
                         clipBehavior: Clip.antiAlias,
                         width: 170,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../products_controller.dart';
+import '../add_new_products_controller.dart';
 
-class EnterColors extends GetView<ProductsController> {
+class EnterColors extends GetView<AddNewProductsController> {
   const EnterColors({Key? key}) : super(key: key);
 
   @override
@@ -50,7 +50,7 @@ class EnterColors extends GetView<ProductsController> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         // color: Colors.red,
-                        color: Color(controller.colors[index]),
+                        color: Color(int.parse('0xff${controller.colors[index]}')),
                       ),
                     ),
                   );

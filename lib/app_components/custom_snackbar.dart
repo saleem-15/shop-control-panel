@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CustomSnackBar {
+class CustomSnackbar {
   static showCustomSnackBar({required String title, required String message, Duration? duration}) {
     Get.snackbar(
       title,
       message,
       duration: duration ?? const Duration(seconds: 3),
-      maxWidth: 300,
+      maxWidth: 400,
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       colorText: Colors.white,
       backgroundColor: Colors.green,
@@ -24,7 +24,7 @@ class CustomSnackBar {
       title,
       message,
       duration: duration ?? const Duration(seconds: 3),
-      maxWidth: 300,
+      maxWidth: 400,
       margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       colorText: Colors.white,
       backgroundColor: color ?? Colors.redAccent,
@@ -39,7 +39,6 @@ class CustomSnackBar {
     Get.rawSnackbar(
       title: title,
       duration: duration ?? const Duration(seconds: 3),
-      maxWidth: 300,
 
       snackStyle: SnackStyle.GROUNDED,
       backgroundColor: color ?? Colors.green,
@@ -55,7 +54,6 @@ class CustomSnackBar {
     Get.rawSnackbar(
       title: title,
       duration: duration ?? const Duration(seconds: 3),
-      maxWidth: 300,
 
       snackStyle: SnackStyle.GROUNDED,
       backgroundColor: color ?? Colors.redAccent,

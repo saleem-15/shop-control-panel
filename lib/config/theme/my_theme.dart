@@ -13,11 +13,9 @@ class MyTheme {
     return ThemeData(
       // main color (app bar,tabs..etc)
       colorScheme: const ColorScheme.light().copyWith(
-        primary:  myBlack ,
+        primary: myBlack,
       ),
 
-      
-       
       primaryColor: isLight ? LightThemeColors.primaryColor : DarkThemeColors.primaryColor,
       // secondary color (for checkbox,float button, radio..etc)
       accentColor: isLight ? LightThemeColors.accentColor : DarkThemeColors.accentColor,
@@ -60,10 +58,13 @@ class MyTheme {
       radioTheme: MyStyles.getRadioButtonTheme(isLightTheme: isLight),
 
       // textField theme
-      inputDecorationTheme: MyStyles.getInputDecorationTheme(isLightTheme: isLight),
+      // inputDecorationTheme: MyStyles.getInputDecorationTheme(isLightTheme: isLight),
 
       //dialog
       dialogTheme: MyStyles.getDialogTheme(isLightTheme: isLight),
+
+      //drawer (my custom menu)
+      drawerTheme: MyStyles.getDrawerThemeData(isLightTheme: isLight),
     );
   }
 

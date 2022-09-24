@@ -1,117 +1,146 @@
-import 'dart:developer';
-import 'dart:io';
-
-import 'package:desktop_drop/src/drop_target.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pluto_grid/pluto_grid.dart';
+import 'package:shop_conrol_panel/screens/add_product/add_new_products_controller.dart';
 
-import '../../app_components/custom_snackbar.dart';
-import '../category/categories_controller.dart';
+import '../orders/components/actions.dart';
+import 'services/delete_row.dart';
+import 'services/update_row.dart';
 
 class ProductsController extends GetxController {
-  final List<File> list = <File>[].obs;
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final List<PlutoColumn> columns = <PlutoColumn>[
+    PlutoColumn(
+      enableContextMenu: false,
+      readOnly: true,
+      width: 130,
+      title: 'Product Id',
+      field: 'product_id',
+      type: PlutoColumnType.text(),
+    ),
+    PlutoColumn(
+      enableContextMenu: false,
+      width: 150,
+      title: 'Product Name',
+      field: 'product_name',
+      type: PlutoColumnType.text(),
+    ),
+    PlutoColumn(
+      enableContextMenu: false,
+      width: 100,
+      title: 'Price',
+      field: 'price',
+      type: PlutoColumnType.number(
+        negative: false,
+      ),
+    ),
+    PlutoColumn(
+      enableContextMenu: false,
+      width: 120,
+      title: 'Quantity',
+      field: 'quantity',
+      type: PlutoColumnType.number(
+        negative: false,
+      ),
+    ),
+    PlutoColumn(
+      enableContextMenu: false,
+      width: 100,
+      title: 'Colors',
+      field: 'colors',
+      type: PlutoColumnType.text(),
+    ),
+    PlutoColumn(
+      enableContextMenu: false,
+      width: 150,
+      title: 'Sizes',
+      field: 'sizes',
+      type: PlutoColumnType.text(),
+    ),
+    PlutoColumn(
+      enableContextMenu: false,
+      width: 150,
+      // frozen: PlutoColumnFrozen.end,
 
- late final RxList<String> categories ;
+      enableColumnDrag: false,
+      title: '',
+      enableDropToResize: false,
+      field: 'actions',
+      type: PlutoColumnType.select(
+        <String>['delete_button'],
+        defaultValue: 'delete_button',
+      ),
+      renderer: (rendererContext) => DeleteButton(rendererContext: rendererContext),
+    ),
+  ];
 
-  RxBool dragging = false.obs;
-
-  late final RxString chosenCategory;
-
-  final nameController = TextEditingController();
-  final priceController = TextEditingController();
-  final descriptionController = TextEditingController();
-  final colorController = TextEditingController();
-  final sizeController = TextEditingController();
-
-  final colors = <int>[].obs;
-  final sizes = <String>[].obs;
-
-  @override
-  void onInit() {
-  categories =   Get.find<CategoriesController>().categories;
-    chosenCategory = categories.first.obs;
-    super.onInit();
+  void deleteRow(PlutoRow row) {
+    stateManager.removeRows([row]);
+    final productId = row.cells['product_id']!.value;
+    deleteRowService(productId);
   }
 
-  void addNewColor() {
-    String colorValue = colorController.text.trim();
+  final List<PlutoRow> rows = [
+    PlutoRow(
+      cells: {
+        'product_id': PlutoCell(value: 'user1'),
+        'product_name': PlutoCell(value: 'Mike'),
+        'price': PlutoCell(value: 20),
+        'quantity': PlutoCell(value: 'Pending'),
+        'sizes': PlutoCell(value: 'S/M/L/XL/XXL/XXXL'),
+        'colors': PlutoCell(value: 'grey/green/black'),
+        'actions': PlutoCell(value: 'delete_button'),
+      },
+    ),
+    PlutoRow(
+      cells: {
+        'product_id': PlutoCell(value: 'user2'),
+        'product_name': PlutoCell(value: 'Jack'),
+        'price': PlutoCell(value: 25),
+        'quantity': PlutoCell(value: 'Canceled'),
+        'sizes': PlutoCell(value: 'S/M/L/XL/XXL/'),
+        'colors': PlutoCell(value: 'white/black'),
+        'actions': PlutoCell(value: 'delete_button'),
+      },
+    ),
+    PlutoRow(
+      cells: {
+        'product_id': PlutoCell(value: 'user3'),
+        'product_name': PlutoCell(value: 'Suzi'),
+        'price': PlutoCell(value: 40),
+        'quantity': PlutoCell(value: 'Complete'),
+        'sizes': PlutoCell(value: 'M/L/XL/XXL/XXXL'),
+        'colors': PlutoCell(value: 'red/blue'),
+        'actions': PlutoCell(value: 'delete_button'),
+      },
+    ),
+  ];
 
-    if (colorValue.isEmpty) {
-      return;
-    }
+  late PlutoGridStateManager stateManager;
 
-    RegExp colorRegex = RegExp('^#(?:[0-9a-fA-F]{3}){1,2}\$');
-    final isValidColorString = colorRegex.hasMatch(colorValue);
+  PageController pageController = PageController();
 
-    if (!isValidColorString) {
-      CustomSnackBar.showCustomErrorSnackBar(title: 'Error', message: 'Not valid hex color value');
-      return;
-    }
-
-    colorValue = colorValue.replaceFirst('#', '0xff');
-    colors.add(int.parse(colorValue));
-    colorController.clear();
+  void goToAddNewProduct() {
+    Get.find<AddNewProductsController>().goToProducts = goToProducts;
+    pageController.animateToPage(
+      1,
+      duration: const Duration(seconds: 1),
+      curve: Curves.easeInOut,
+    );
   }
 
-  String? priceValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'required';
-    }
-
-    return null;
+  void goToProducts() {
+    pageController.animateToPage(
+      0,
+      duration: const Duration(seconds: 1),
+      curve: Curves.easeInOut,
+    );
   }
 
-  String? nameValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'required';
-    }
+  void onCellValueChanged(PlutoGridOnChangedEvent event) {
+    final String productId = event.row!.cells['product_id']!.value;
+    final int columnIndex = event.columnIdx!;
+    final newValue = event.value;
 
-    return null;
-  }
-
-  String? descriptionValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'required';
-    }
-
-    return null;
-  }
-
-  void addNewSize() {
-    final size = sizeController.text.trim();
-    if (size.isEmpty) {
-      return;
-    }
-
-    sizes.add(size);
-    sizeController.clear();
-  }
-
-  //
-  onDragDone(DropDoneDetails detail) {
-    final isNotImage = detail.files.any((file) => !file.path.isImageFileName);
-
-    if (isNotImage) {
-      CustomSnackBar.showCustomErrorSnackBar(title: 'Error', message: 'Not valid Image!!');
-      return;
-    }
-
-    addImages(detail);
-
-    for (var element in list) {
-      log(element.path);
-    }
-    log(list.length.toString());
-  }
-
-  void addImages(DropDoneDetails detail) => list.addAll(detail.files.map((e) => File(e.path)));
-
-  onDragEntered(DropEventDetails detail) {
-    dragging.value = true;
-  }
-
-  onDragExited(DropEventDetails detail) {
-    dragging.value = false;
+    updateRowInfo(productId, columnIndex, newValue);
   }
 }

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_conrol_panel/config/theme/light_theme_colors.dart';
 
-import '../products_controller.dart';
+import '../add_new_products_controller.dart';
 import 'enter_color.dart';
 import 'enter_size.dart';
 
-class ProductInfoForm extends GetView<ProductsController> {
+class ProductInfoForm extends GetView<AddNewProductsController> {
   const ProductInfoForm({Key? key}) : super(key: key);
 
   @override
@@ -48,9 +48,9 @@ class ProductInfoForm extends GetView<ProductsController> {
                 ),
                 items: controller.categories
                     .map((item) => DropdownMenuItem<String>(
-                          value: item,
+                          value: item.name,
                           child: Text(
-                            item,
+                            item.name,
                             style: const TextStyle(
                               fontSize: 14,
                             ),
@@ -78,6 +78,16 @@ class ProductInfoForm extends GetView<ProductsController> {
             height: 30,
           ),
           TextFormField(
+            controller: controller.quantityController,
+            validator: controller.quantityValidator,
+            decoration: const InputDecoration(
+              hintText: 'Quantity',
+            ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          TextFormField(
             controller: controller.descriptionController,
             validator: controller.descriptionValidator,
             maxLines: 8,
@@ -93,6 +103,14 @@ class ProductInfoForm extends GetView<ProductsController> {
             height: 40,
           ),
           const EnterSize(),
+          const SizedBox(
+            height: 40,
+          ),
+
+          ElevatedButton(
+            onPressed: controller.addNewProduct,
+            child: const Text('Add New Product'),
+          )
         ],
       ),
     );

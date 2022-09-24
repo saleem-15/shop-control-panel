@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pluto_grid/pluto_grid.dart';
 
 import 'customers_controller.dart';
 
@@ -17,11 +18,20 @@ class CustomersScreen extends GetView<CustomersController> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Column(
-            children: const [],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: PlutoGrid(
+          columns: controller.columns,
+          rows: controller.rows,
+          onLoaded: controller.onPlutoGridInit,
+          configuration: PlutoGridConfiguration(
+            style: PlutoGridStyleConfig(
+              gridBorderRadius: BorderRadius.circular(10),
+              enableCellBorderVertical: false,
+              enableColumnBorderHorizontal: false,
+              enableColumnBorderVertical: false,
+              gridBorderColor: Colors.transparent,
+            ),
           ),
         ),
       ),

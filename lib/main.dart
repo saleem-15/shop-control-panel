@@ -1,12 +1,15 @@
+import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shop_conrol_panel/config/theme/light_theme_colors.dart';
 import 'package:shop_conrol_panel/screens/customers/customers_screen.dart';
 import 'package:shop_conrol_panel/screens/orders/orders_screen.dart';
 
-import 'components/menu.dart';
 import 'config/theme/my_theme.dart';
+import 'screens/add_product/add_new_products_controller.dart';
+import 'screens/add_product/images_controller.dart';
 import 'screens/category/categories_controller.dart';
 import 'screens/category/category_screen.dart';
 import 'screens/customers/customers_controller.dart';
@@ -18,9 +21,11 @@ import 'storage/my_shared_pref.dart';
 Future<void> main() async {
   await MySharedPref.init();
   Get.lazyPut(() => ProductsController(), fenix: true);
+  Get.lazyPut(() => AddNewProductsController(), fenix: true);
   Get.lazyPut(() => OrdersController(), fenix: true);
   Get.lazyPut(() => CategoriesController(), fenix: true);
   Get.lazyPut(() => CustomersController(), fenix: true);
+  Get.lazyPut(() => ImagesController(), fenix: true);
   runApp(MyApp());
 }
 
@@ -30,8 +35,36 @@ class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final List<CollapsibleItem> items = [
+      CollapsibleItem(
+        onPressed: () => selectedIndex.value = 0,
+        text: 'Orders',
+        icon: Icons.shopping_cart,
+        isSelected: selectedIndex.value == 0,
+      ),
+      CollapsibleItem(
+        onPressed: () => selectedIndex.value = 1,
+        text: 'Products',
+        icon: Icons.add_box,
+        isSelected: selectedIndex.value == 1,
+      ),
+      CollapsibleItem(
+        onPressed: () => selectedIndex.value = 2,
+        text: 'Categories',
+        icon: Icons.category,
+        isSelected: selectedIndex.value == 2,
+      ),
+      CollapsibleItem(
+        onPressed: () => selectedIndex.value = 3,
+        text: 'Customers',
+        icon: Icons.people,
+        isSelected: selectedIndex.value == 3,
+      ),
+    ];
+
     return ScreenUtilInit(
       builder: (context, child) => GetMaterialApp(
+        smartManagement: SmartManagement.onlyBuilder,
         scrollBehavior: const MaterialScrollBehavior().copyWith(
           dragDevices: {
             PointerDeviceKind.mouse,
@@ -54,33 +87,45 @@ class MyApp extends StatelessWidget {
         },
         title: 'Material App',
         home: Scaffold(
-          body: Row(
-            children: [
-              Menu(index: selectedIndex),
-              Expanded(
-                child: Obx(
-                  () {
-                    selectedIndex.value;
-                    return Builder(
-                      builder: (context) {
-                        switch (selectedIndex.value) {
-                          case 0:
-                            return  OrdersScreen();
-                          case 1:
-                            return const ProductsScreen();
-                          case 2:
-                            return const CategoryScreen();
+          body: CollapsibleSidebar(
+            items: items,
+            title: 'Admin',
 
-                          case 3:
-                            return const CustomersScreen();
-                          default:
-                            return const ProductsScreen();
-                        }
-                      },
-                    );
-                  },
-                ),
-              )
+            titleBack: true,
+            titleBackIcon: Icons.person, //the back icon is 'arrow_back' by default (customizable)
+
+            body: Row(
+              children: [
+                // Menu(index: selectedIndex),
+                Expanded(
+                  child: Obx(
+                    () {
+                      selectedIndex.value;
+                      return Builder(
+                        builder: (context) {
+                          switch (selectedIndex.value) {
+                            case 0:
+                              return const OrdersScreen();
+                            case 1:
+                              return const ProductsScreen();
+                            case 2:
+                              return const CategoryScreen();
+
+                            case 3:
+                              return const CustomersScreen();
+                            default:
+                              return const ProductsScreen();
+                          }
+                        },
+                      );
+                    },
+                  ),
+                )
+              ],
+            ),
+
+            sidebarBoxShadow: const [
+              BoxShadow(color: myBlack, blurRadius: 10, spreadRadius: 0.01, offset: Offset(3, 3))
             ],
           ),
         ),
