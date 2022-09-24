@@ -1,19 +1,20 @@
-import 'dart:convert';
-import 'dart:developer';
-
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:shop_conrol_panel/constants/api_url.dart';
 
-Future<void> updateCategoryInfo(int categoryId, String newValue) async {
-  final uri = Uri.http(apiUrl, '$apiPath/category/update', {
-    'Api_Password': apikey,
-    'category_id': '$categoryId',
-    'name': newValue,
-  });
+import '../../../app_components/custom_snackbar.dart';
+import '../../../app_components/helpers.dart';
 
-  final responese = await http.post(uri);
-  final json = jsonDecode(responese.body);
-
-  log(json.toString());
-  log('new VALUE: $newValue');
+///returnes true if the category was updated successfully
+Future<bool> updateCategoryInfo(int categoryId, String newValue) async {
+  try {
+    await dio.put(
+      '$CATEGORY_PATH/$categoryId',
+      queryParameters: {'name': newValue},
+    );
+    CustomSnackbar.showCustomToast(message: 'The category was updated successfully');
+    return true;
+  } on DioError catch (e) {
+    CustomSnackbar.showCustomErrorToast(message: formatErrorMsg(e.response!.data));
+    return false;
+  }
 }

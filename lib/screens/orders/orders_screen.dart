@@ -20,35 +20,29 @@ class OrdersScreen extends GetView<OrdersController> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Obx(
-        () => controller.isLoading.isTrue
-            ? const Center(child: CircularProgressIndicator())
-            : Container(
-                // width: 500,
-                // height: 500,
-                padding: const EdgeInsets.all(8.0),
-                child: PlutoGrid(
-                  columns: controller.columns,
-                  rows: controller.rows,
-                  // columnGroups: controller.columnGroups,
-                  onLoaded: (PlutoGridOnLoadedEvent event) {
-                    controller.stateManager = event.stateManager;
-                  },
-                  onChanged: (PlutoGridOnChangedEvent event) {
-                    log(event.toString());
-                  },
-                  configuration: PlutoGridConfiguration(
-                    style: PlutoGridStyleConfig(
-                      gridBorderRadius: BorderRadius.circular(10),
-                      gridPopupBorderRadius:  BorderRadius.circular(10),
-                      enableCellBorderVertical: false,
-                      enableColumnBorderHorizontal: false,
-                      enableColumnBorderVertical: false,
-                      gridBorderColor: Colors.transparent,
-                    ),
-                  ),
-                ),
-              ),
+      body: Container(
+        // width: 500,
+        // height: 500,
+        padding: const EdgeInsets.all(8.0),
+        child: PlutoGrid(
+          columns: controller.columns,
+          rows: controller.rows,
+          // columnGroups: controller.columnGroups,
+          onLoaded: controller.onPlutoGridInit,
+          onChanged: (PlutoGridOnChangedEvent event) {
+            log(event.toString());
+          },
+          configuration: PlutoGridConfiguration(
+            style: PlutoGridStyleConfig(
+              gridBorderRadius: BorderRadius.circular(10),
+              gridPopupBorderRadius: BorderRadius.circular(10),
+              enableCellBorderVertical: false,
+              enableColumnBorderHorizontal: false,
+              enableColumnBorderVertical: false,
+              gridBorderColor: Colors.transparent,
+            ),
+          ),
+        ),
       ),
     );
   }

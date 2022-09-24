@@ -25,14 +25,14 @@ Future<bool> addNewProductService(String categoryId, String name, double price, 
     ]);
   }
   try {
-    final response = await dio.post(
-      addNewProduct,
+     await dio.post(
+      PRODUCT_PATH,
       data: formData,
     );
     //
-    return true;
     CustomSnackbar.showCustomToast(message: 'The product was added successfully!');
     // log(response.data.toString());
+    return true;
   } on DioError catch (e) {
     CustomSnackbar.showCustomErrorToast(message: formatErrorMsg(e.response!.data));
     return false;

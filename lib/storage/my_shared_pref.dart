@@ -5,7 +5,7 @@ import '../../../config/translations/localization_service.dart';
 
 class MySharedPref {
   // get storage
-  static late final _storage;
+  static late final GetStorage  _storage;
 
   // STORING KEYS
   static const String _fcmTokenKey = 'fcm_token';

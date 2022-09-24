@@ -70,11 +70,11 @@ class CustomersController extends GetxController {
     super.onReady();
   }
 
-  void onPlutoGridInit(PlutoGridOnLoadedEvent event) {
+  Future<void> onPlutoGridInit(PlutoGridOnLoadedEvent event) async {
     stateManager = event.stateManager;
-    if(stateManager.rows.isEmpty){
-
     event.stateManager.setShowLoading(true);
-    }
+    final rows = await fetchCustomersService();
+    stateManager.appendRows(rows);
+    event.stateManager.setShowLoading(false);
   }
 }

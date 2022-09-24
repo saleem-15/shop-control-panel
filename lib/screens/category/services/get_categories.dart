@@ -6,7 +6,7 @@ import 'package:shop_conrol_panel/models/category.dart';
 
 Future<dynamic> getCategoriesService() async {
   try {
-    final response = await dio.get(getAllCategories);
+    final response = await dio.get(CATEGORY_PATH);
 
     final categoriesData = response.data['Data'];
 

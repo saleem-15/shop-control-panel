@@ -49,14 +49,11 @@ class Products extends GetView<ProductsController> {
           columns: controller.columns,
           rows: controller.rows,
           // columnGroups: controller.columnGroups,
-          onLoaded: (PlutoGridOnLoadedEvent event) {
-            controller.stateManager = event.stateManager;
-          },
+          onLoaded: controller.onPlutoGridInit,
           onChanged: controller.onCellValueChanged,
           configuration: PlutoGridConfiguration(
             enterKeyAction: PlutoGridEnterKeyAction.editingAndMoveRight,
             style: PlutoGridStyleConfig(
-           
               gridBorderRadius: BorderRadius.circular(10),
               enableCellBorderVertical: false,
               enableColumnBorderHorizontal: false,

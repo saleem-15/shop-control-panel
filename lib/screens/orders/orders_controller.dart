@@ -68,48 +68,21 @@ class OrdersController extends GetxController {
       renderer: (rendererContext) => Status(status: rendererContext.cell.value.toString()),
     ),
   ];
-  
-  RxList<PlutoRow> rows = <PlutoRow>[].obs;
+
+  List<PlutoRow> rows = <PlutoRow>[];
   late PlutoGridStateManager stateManager;
-  List x = [];
-  @override
-  Future<void> onReady() async {
-    final list = await getOrders();
-    rows.addAll(list);
+
+  void onPlutoGridInit(PlutoGridOnLoadedEvent event) {
+    stateManager = event.stateManager;
+    initOrders();
+  }
+
+  Future<void> initOrders() async {
+    stateManager.setShowLoading(true);
+    final orders = await getOrders();
+    stateManager.removeAllRows();
+    stateManager.appendRows(orders);
+    stateManager.setShowLoading(false);
     isLoading.value = false;
-    super.onInit();
   }
 }
-
-/*
-  PlutoRow(
-      cells: {
-        'order_id': PlutoCell(value: 'user1'),
-        'product_name': PlutoCell(value: 'Mike'),
-        'price': PlutoCell(value: 20),
-        'status': PlutoCell(value: 'Pending'),
-        'date': PlutoCell(value: '2021-01-01'),
-        'address': PlutoCell(value: '09:00'),
-      },
-    ),
-    PlutoRow(
-      cells: {
-        'order_id': PlutoCell(value: 'user2'),
-        'product_name': PlutoCell(value: 'Jack'),
-        'price': PlutoCell(value: 25),
-        'status': PlutoCell(value: 'Canceled'),
-        'date': PlutoCell(value: '2021-02-01'),
-        'address': PlutoCell(value: '10:00'),
-      },
-    ),
-    PlutoRow(
-      cells: {
-        'order_id': PlutoCell(value: 'user3'),
-        'product_name': PlutoCell(value: 'Suzi'),
-        'price': PlutoCell(value: 40),
-        'status': PlutoCell(value: 'Complete'),
-        'date': PlutoCell(value: '2021-03-01'),
-        'address': PlutoCell(value: '11:00'),
-      },
-    ),
-*/

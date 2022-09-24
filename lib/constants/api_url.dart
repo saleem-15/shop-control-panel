@@ -28,43 +28,31 @@ const signUp = '/Auth/user/register';
 const logout = '/Auth/user/logout';
 const checkisEmailUsed = '/Auth/user/email';
 
+// Customers
+const CUSTOMERS_PATH = '/customer';
+
 //category
-const getAllCategories = '/category';
-const addNewCategory = '/category';
-const deleteCategory = '/category';
+const CATEGORY_PATH = '/category';
 
 //products
 
-const addNewProduct = '/product';
-const getAllProducts = '/product';
-const getProductDetails = '/product/';
+const PRODUCT_PATH = '/product';
 const getCategoryProducts = '/category';
 
 //orders
-const getAllOrders = '/order';
-const addOrder = '/order';
-const updateOrder = '/product';
-//
-const checkout = '/cart/product/checkout';
+const ORDER_PATH = '/order';
 
-//profile
-const updateUserInfo = '/user/update';
 
 //cart
 const getAllUserCartItems = '/cart/product/index';
-const addProductToCart = '/cart/product/store';
-const updateCartItem = '/cart/product/update';
 const deleteCartItem = '/cart/product/destroy';
 
 //shipping address
 const getAllUserShippingAddresses = '/user/address/index';
-const addShippingAddress = '/user/address/store';
-const deleteShippingAddress = '/user/address/destroy';
-const updateShippingAddress = '/user/address/update';
-const setShippingAddressAsDefault = '/user/address/default/set';
+
 
 //shipping type
-const getAllShippingTypes = '/shipping/type';
+const SHIPPING_TYPE_PATH = '/shipping/type';
 
 //search
 const search = '/product/search';

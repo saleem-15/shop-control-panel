@@ -24,6 +24,9 @@ class Status extends StatelessWidget {
         textColor = const Color(0xffF46C6C);
         backgroundColor = const Color(0xffFAF0F0);
         break;
+
+      default:
+        throw ('status = $status ==> order status must either be (Complete,Pending,Canceled)');
     }
 
     return Chip(

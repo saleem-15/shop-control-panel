@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:desktop_drop/desktop_drop.dart';
@@ -21,56 +22,55 @@ class CategoriesController extends GetxController {
   bool get isImageExists => image.value != null;
 
   final nameController = TextEditingController();
-  final descriptionController = TextEditingController();
+  String get name => nameController.text.trim();
+
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   final RxList<Category> categories = <Category>[].obs;
 
   late PlutoGridStateManager stateManager;
-  final List<PlutoColumn> columns = <PlutoColumn>[
-    PlutoColumn(
-      enableContextMenu: false,
-      readOnly: true,
-      width: 130,
-      title: 'Category Id',
-      field: 'category_id',
-      type: PlutoColumnType.text(),
-    ),
-    PlutoColumn(
-      enableContextMenu: false,
-      width: 150,
-      title: 'Category Name',
-      field: 'category_name',
-      type: PlutoColumnType.text(),
-    ),
-    PlutoColumn(
-      enableContextMenu: false,
-      width: 150,
-      // frozen: PlutoColumnFrozen.end,
-
-      enableColumnDrag: false,
-      title: '',
-      enableDropToResize: false,
-      field: 'actions',
-      type: PlutoColumnType.select(
-        <String>['delete_button'],
-        defaultValue: 'delete_button',
-      ),
-      renderer: (rendererContext) => DeleteButton(rendererContext: rendererContext),
-    ),
-  ];
+  late final List<PlutoColumn> columns;
   final List<PlutoRow> rows = [];
 
   @override
-  Future<void> onReady() async {
-    final categoriesData = await getCategoriesService();
-    categories.addAll(convertJsonToCategories(categoriesData));
-    isLoading(false);
+  void onInit() {
+    super.onInit();
 
-    stateManager.appendRows(convertJsonToPlutoRows(categoriesData));
-    stateManager.setShowLoading(false);
+    columns = <PlutoColumn>[
+      PlutoColumn(
+        enableContextMenu: false,
+        readOnly: true,
+        width: 130,
+        title: 'Category Id',
+        field: 'category_id',
+        type: PlutoColumnType.text(),
+      ),
+      PlutoColumn(
+        enableContextMenu: false,
+        width: 150,
+        title: 'Category Name',
+        field: 'category_name',
+        type: PlutoColumnType.text(),
+      ),
+      PlutoColumn(
+        enableContextMenu: false,
+        width: 150,
+        // frozen: PlutoColumnFrozen.end,
 
-    super.onReady();
+        enableColumnDrag: false,
+        title: '',
+        enableDropToResize: false,
+        field: 'actions',
+        type: PlutoColumnType.select(
+          <String>['delete_button'],
+          defaultValue: 'delete_button',
+        ),
+        renderer: (rendererContext) => DeleteButton(
+          rendererContext: rendererContext,
+          deleteRow: deleteRow,
+        ),
+      ),
+    ];
   }
 
   String? nameValidator(String? value) {
@@ -79,7 +79,7 @@ class CategoriesController extends GetxController {
       return 'required';
     }
 
-    final isCategoryExists = categories.contains(name);
+    final bool isCategoryExists = categories.any((category) => category.name == name);
 
     if (isCategoryExists) {
       return 'Category Already Exits';
@@ -105,7 +105,6 @@ class CategoriesController extends GetxController {
     if (!isValid) {
       return;
     }
-    final name = nameController.text.trim();
 
     addNewCategoryService(image.value!, name);
 
@@ -118,25 +117,40 @@ class CategoriesController extends GetxController {
     final int categoryId = row.cells['category_id']!.value;
     final String newValue = event.value;
 
-    final isOnlyLettersAndWhiteSpace = RegExp('^[A-Za-z\\s]*\$').hasMatch(newValue);
+    final isValidName = isValidCategoryName(newValue);
 
-    /// check if the new value is valid. if its not valid => (write the old value to the table & show error msg)
-    if (newValue.trim().isEmpty) {
-      CustomSnackbar.showCustomErrorSnackBar(
-          title: 'Failed', message: 'Cannot have an empty category name!!');
+    /// if the new value is not valid => (write the old value to the table )
+    if (!isValidName) {
       cell.value = event.oldValue;
-      return;
-    } else if (!isOnlyLettersAndWhiteSpace) {
-      CustomSnackbar.showCustomErrorSnackBar(
-        title: 'Failed',
-        message: 'category name can only contains letters !!',
-      );
-      cell.value = event.oldValue;
-
       return;
     }
 
     updateCategoryInfo(categoryId, newValue);
+  }
+
+  /// checks if the string is a valid category name.
+  /// it shows error messages explaining the error.
+  bool isValidCategoryName(String name) {
+    /// not empty
+    if (name.trim().isEmpty) {
+      CustomSnackbar.showCustomErrorSnackBar(
+        title: 'Failed',
+        message: 'Cannot have an empty category name!!',
+      );
+      return false;
+    }
+
+    final isOnlyLettersAndWhiteSpace = RegExp('^[A-Za-z\\s]*\$').hasMatch(name);
+
+    /// only letters and spaces
+    if (!isOnlyLettersAndWhiteSpace) {
+      CustomSnackbar.showCustomErrorSnackBar(
+        title: 'Failed',
+        message: 'category name can only contains letters !!',
+      );
+      return false;
+    }
+    return true;
   }
 
   onDragDone(DropDoneDetails detail) {
@@ -163,8 +177,16 @@ class CategoriesController extends GetxController {
     dragging.value = false;
   }
 
-  void onPlutoGridInit(PlutoGridOnLoadedEvent event) {
+  Future<void> onPlutoGridInit(PlutoGridOnLoadedEvent event) async {
     stateManager = event.stateManager;
+    log('-------categories------ state manager is initialized');
+    final categoriesData = await getCategoriesService();
+    categories.addAll(convertJsonToCategories(categoriesData));
+    isLoading(false);
+
+    stateManager.appendRows(convertJsonToPlutoRows(categoriesData));
+    stateManager.setShowLoading(false);
+
     if (stateManager.rows.isEmpty) {
       event.stateManager.setShowLoading(true);
     }
