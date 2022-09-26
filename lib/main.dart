@@ -3,19 +3,22 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:shop_conrol_panel/config/theme/light_theme_colors.dart';
-import 'package:shop_conrol_panel/screens/customers/customers_screen.dart';
-import 'package:shop_conrol_panel/screens/orders/orders_screen.dart';
+import 'package:shop_conrol_panel/modules/shipping/controllers/add_shipping_type_controller.dart';
+import 'package:shop_conrol_panel/modules/shipping/controllers/shipping_controller.dart';
+import 'package:shop_conrol_panel/modules/shipping/screens/shipping_screen.dart';
 
+import 'config/theme/light_theme_colors.dart';
+import 'modules/customers/customers_screen.dart';
+import 'modules/orders/orders_screen.dart';
 import 'config/theme/my_theme.dart';
-import 'screens/add_product/add_new_products_controller.dart';
-import 'screens/add_product/images_controller.dart';
-import 'screens/category/categories_controller.dart';
-import 'screens/category/category_screen.dart';
-import 'screens/customers/customers_controller.dart';
-import 'screens/orders/orders_controller.dart';
-import 'screens/products/products_controller.dart';
-import 'screens/products/products_screen.dart';
+import 'modules/products/controllers/add_new_products_controller.dart';
+import 'modules/products/controllers/images_controller.dart';
+import 'modules/category/categories_controller.dart';
+import 'modules/category/category_screen.dart';
+import 'modules/customers/customers_controller.dart';
+import 'modules/orders/orders_controller.dart';
+import 'modules/products/controllers/products_controller.dart';
+import 'modules/products/screens/products_screen.dart';
 import 'storage/my_shared_pref.dart';
 
 Future<void> main() async {
@@ -26,6 +29,8 @@ Future<void> main() async {
   Get.lazyPut(() => CategoriesController(), fenix: true);
   Get.lazyPut(() => CustomersController(), fenix: true);
   Get.lazyPut(() => ImagesController(), fenix: true);
+  Get.lazyPut(() => ShippingController(), fenix: true);
+  Get.lazyPut(() => AddNewShippingTypeController(), fenix: true);
   runApp(MyApp());
 }
 
@@ -60,6 +65,12 @@ class MyApp extends StatelessWidget {
         icon: Icons.people,
         isSelected: selectedIndex.value == 3,
       ),
+      CollapsibleItem(
+        onPressed: () => selectedIndex.value = 4,
+        text: 'Shipping',
+        icon: Icons.local_shipping_rounded,
+        isSelected: selectedIndex.value == 4,
+      ),
     ];
 
     return ScreenUtilInit(
@@ -85,7 +96,7 @@ class MyApp extends StatelessWidget {
             ),
           );
         },
-        title: 'Material App',
+        title: 'Shop control panel',
         home: Scaffold(
           body: CollapsibleSidebar(
             items: items,
@@ -113,6 +124,9 @@ class MyApp extends StatelessWidget {
 
                             case 3:
                               return const CustomersScreen();
+
+                            case 4:
+                              return const ShippingScreen();
                             default:
                               return const ProductsScreen();
                           }

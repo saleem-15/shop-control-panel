@@ -77,7 +77,7 @@ class MyStyles {
         //
         headline6: (MyFonts.headlineTextStyle).copyWith(
             fontSize: MyFonts.headline6TextSize,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w700,
             color: isLightTheme ? LightThemeColors.headlinesTextColor : DarkThemeColors.headlinesTextColor),
         caption: TextStyle(
             color: isLightTheme ? LightThemeColors.captionTextColor : DarkThemeColors.captionTextColor,
@@ -189,13 +189,65 @@ class MyStyles {
         color: isLightTheme ? LightThemeColors.dividerColor : DarkThemeColors.dividerColor,
       );
 
-  
   static getDialogTheme({required bool isLightTheme}) => DialogTheme(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.r),
+          borderRadius: BorderRadius.circular(30.r),
+        ),
+      );
+  static getCardTheme({required bool isLightTheme}) => CardTheme(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
         ),
       );
 
+  static InputDecorationTheme getInputDecorationTheme({required bool isLightTheme}) => InputDecorationTheme(
+        filled: true,
+        fillColor: lightGrey,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(13.r),
+          borderSide: const BorderSide(color: lightGrey, width: 1.5),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(13.r),
+          borderSide: const BorderSide(color: lightGrey, width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(13.r),
+          borderSide: const BorderSide(color: lightGrey, width: 1.5),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(13.r),
+          borderSide: const BorderSide(color: lightGrey, width: 1.5),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(13.r),
+          borderSide: const BorderSide(color: lightGrey, width: 1.5),
+        ),
+      );
+  static InputDecoration getInputDecoration({required bool isLightTheme}) => InputDecoration(
+        filled: true,
+        fillColor: lightGrey,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(13.r),
+          borderSide: const BorderSide(color: lightGrey, width: 1.5),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(13.r),
+          borderSide: const BorderSide(color: lightGrey, width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(13.r),
+          borderSide: const BorderSide(color: lightGrey, width: 1.5),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(13.r),
+          borderSide: const BorderSide(color: lightGrey, width: 1.5),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(13.r),
+          borderSide: const BorderSide(color: lightGrey, width: 1.5),
+        ),
+      );
   //*************************** My Custom Styles For a Specific Use Cases  ***********************************
 
   static ButtonStyle getGreyElevatedButtonStyle() => ButtonStyle(

@@ -1,22 +1,22 @@
 import 'dart:developer';
 
 String formatErrorMsg(dynamic data) {
-  if (data is int) {
-    return data.toString();
+  final messages = data['Messages'];
+  if (messages is int) {
+    return messages.toString();
   }
 
-  if (data is String) {
-    return data;
+  if (messages is String) {
+    return messages;
   }
 
-  final errorsMap = data['Messages'];
-  log(data.toString());
+  // log(data.toString());
 
   // log('error msg type: ${errorsMap.runtimeType}');
   //the error map is Map<String,List<String>>
   String errorString = '';
 
-  for (var value in errorsMap.values) {
+  for (var value in messages.values) {
     for (var e in (value as List)) {
       log('value: $e');
       errorString += '$e\n';

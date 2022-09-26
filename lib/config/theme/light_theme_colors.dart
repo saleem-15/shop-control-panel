@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 const Color myBlack = Color(0xFF32323D);
 const Color lightRed = Color(0xFFf75555);
 
-const Color searchTextfieldColor = Color.fromARGB(255, 230, 227, 227);
+const Color lightGrey = Color.fromARGB(255, 230, 227, 227);
 
 class LightThemeColors {
   //light swatch
@@ -27,6 +27,7 @@ class LightThemeColors {
   //ICONS
   static const Color appBarIconsColor = Colors.white;
   static const Color iconColor = Color(0xff656E7A);
+  static const Color floatingActionButtonColor = myBlack;
 
   //BUTTON
   static const Color buttonColor = myBlack;

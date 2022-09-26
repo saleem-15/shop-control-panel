@@ -57,6 +57,8 @@ class MyTheme {
 
       radioTheme: MyStyles.getRadioButtonTheme(isLightTheme: isLight),
 
+      cardTheme: MyStyles.getCardTheme(isLightTheme: isLight),
+
       // textField theme
       // inputDecorationTheme: MyStyles.getInputDecorationTheme(isLightTheme: isLight),
 
