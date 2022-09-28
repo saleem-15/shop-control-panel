@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_conrol_panel/config/theme/my_styles.dart';
-import '../../category/components/drop_image_area.dart';
 import '../components/form.dart';
+import '../components/images_area.dart';
 import '../controllers/add_new_products_controller.dart';
 
 class AddNewProductScreen extends GetView<AddNewProductsController> {
@@ -30,26 +30,25 @@ class AddNewProductScreen extends GetView<AddNewProductsController> {
         data: Theme.of(context).copyWith(
           inputDecorationTheme: MyStyles.getInputDecorationTheme(isLightTheme: true),
         ),
-        child:  SingleChildScrollView(
-                  //this is added to fix a bug
-                  controller: ScrollController(),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        SizedBox(
-                          width: 400,
-                          child: ProductInfoForm(),
-                        ),
-                        Expanded(
-                          child: DropImagesArea(),
-                        ),
-                      ],
-                    ),
-                  ),
+        child: SingleChildScrollView(
+          //this is added to fix a bug
+          controller: ScrollController(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [
+                SizedBox(
+                  width: 400,
+                  child: ProductInfoForm(),
                 ),
-        
+                Expanded(
+                  child: DropImagesArea(),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

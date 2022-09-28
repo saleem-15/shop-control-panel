@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
 import '../../config/theme/light_theme_colors.dart';
-import '../../constants/table_constants.dart';
+import '../../constants/constants.dart';
 import 'categories_controller.dart';
 
 class CategoryScreen extends GetView<CategoriesController> {
@@ -16,7 +16,15 @@ class CategoryScreen extends GetView<CategoriesController> {
         title: Text(
           'Categories',
           style: Theme.of(context).textTheme.headline4,
-        ),
+        ),  actions: [
+          IconButton(
+            onPressed: controller.refreshCategories,
+            icon: Icon(
+              Icons.refresh,
+              color: Theme.of(context).iconTheme.color,
+            ),
+          ),
+        ],
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),

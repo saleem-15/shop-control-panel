@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:shop_conrol_panel/constants/api_url.dart';
+import 'package:shop_conrol_panel/constants/api.dart';
 
 import '../../../app_components/custom_snackbar.dart';
 import '../../../app_components/helpers.dart';

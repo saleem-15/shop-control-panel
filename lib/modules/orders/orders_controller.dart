@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:shop_conrol_panel/app_components/pagination/pagination_controller.dart';
 import 'package:shop_conrol_panel/modules/orders/components/status.dart';
 
 import 'services/get_orders.dart';
@@ -59,8 +60,9 @@ class OrdersController extends GetxController {
       field: 'status',
       type: PlutoColumnType.select(
         <String>[
-          'Complete',
+          'Processing',
           'Pending',
+          'Complete',
           'Canceled',
         ],
         enableColumnFilter: true,
@@ -68,27 +70,49 @@ class OrdersController extends GetxController {
       renderer: (rendererContext) => Status(status: rendererContext.cell.value.toString()),
     ),
   ];
-
   List<PlutoRow> rows = <PlutoRow>[];
-    bool isStateManagerInitialized = false;
 
+  RxBool isStateManagerInitialized = false.obs;
   late PlutoGridStateManager stateManager;
+
+  /// this determines the number of orders per page
+  static const int pageSize = 3;
+
+  late final PaginationController paginationController;
 
   void onPlutoGridInit(PlutoGridOnLoadedEvent event) {
     stateManager = event.stateManager;
 
-    if (!isStateManagerInitialized) {
-    initOrders();
+    if (!isStateManagerInitialized.value) {
+      paginationController = PaginationController(
+        stateManager,
+        pageSize,
+        fetchOrders,
+      );
+      isStateManagerInitialized.value = true;
     }
-    isStateManagerInitialized = true;
+    paginationController.initStateManager(stateManager);
   }
 
-  Future<void> initOrders() async {
+  /// this method should be called by the pagination controller only
+  Future<void> fetchOrders(int pageNum, int numOfItemsPerPage) async {
     stateManager.setShowLoading(true);
-    final orders = await getOrders();
-    stateManager.removeAllRows();
+    final orders = await getOrdersService(pageNum, numOfItemsPerPage);
     stateManager.appendRows(orders);
     stateManager.setShowLoading(false);
     isLoading.value = false;
+  }
+
+  void setAllOrdersNumber(int numOfAllOrders) {
+    paginationController.setAllItemsNumber(numOfAllOrders);
+  }
+
+  void setNumOfPages(int numOfPages) {
+    paginationController.setNumOfPages(numOfPages);
+  }
+
+  /// reloads all the products from the server again
+  void refreshOrders() {
+    paginationController.refreshItems();
   }
 }

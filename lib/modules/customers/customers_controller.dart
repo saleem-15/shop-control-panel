@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:shop_conrol_panel/app_components/pagination/pagination_controller.dart';
 
 import 'services/fetch_customers_service.dart';
 
@@ -57,26 +57,45 @@ class CustomersController extends GetxController {
   ];
 
   final List<PlutoRow> rows = [];
-  bool isStateManagerInitialized = false;
+  RxBool isStateManagerInitialized = false.obs;
   late PlutoGridStateManager stateManager;
 
-  @override
-  Future<void> onReady() async {
-    super.onReady();
-  }
+  late final PaginationController paginationController;
 
-  Future<void> onPlutoGridInit(PlutoGridOnLoadedEvent event) async {
-    stateManager = event.stateManager;
-    if (!isStateManagerInitialized) {
-      initCustomers();
-    }
-    isStateManagerInitialized = true;
-  }
+  static const int pageSize = 3;
 
-  Future<void> initCustomers() async {
+  /// this method should be called from the [PaginationController] only
+  Future<void> fetchCustomers(int pageNum, int numOfCustomersPerPage) async {
     stateManager.setShowLoading(true);
-    final rows = await fetchCustomersService();
+    final rows = await fetchCustomersService(pageNum, numOfCustomersPerPage);
     stateManager.appendRows(rows);
     stateManager.setShowLoading(false);
+  }
+
+  void onPlutoGridInit(PlutoGridOnLoadedEvent event) {
+    stateManager = event.stateManager;
+
+    if (!isStateManagerInitialized.value) {
+      paginationController = PaginationController(
+        stateManager,
+        pageSize,
+        fetchCustomers,
+      );
+      isStateManagerInitialized.value = true;
+    }
+    paginationController.initStateManager(stateManager);
+  }
+
+  void setAllCustomersNumber(int numOfAllOrders) {
+    paginationController.setAllItemsNumber(numOfAllOrders);
+  }
+
+  void setNumOfPages(int numOfPages) {
+    paginationController.setNumOfPages(numOfPages);
+  }
+
+  /// reloads all the customers from the server again
+  void refreshCustomers() {
+    paginationController.refreshItems();
   }
 }

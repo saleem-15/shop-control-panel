@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 
 import '../../../app_components/custom_snackbar.dart';
 import '../../../app_components/helpers.dart';
-import '../../../constants/api_url.dart';
+import '../../../constants/api.dart';
 
 /// column index  determines what is changed (name,price,quantity)
 /// returnes true if the product is updated successfully

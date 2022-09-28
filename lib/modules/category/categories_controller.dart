@@ -254,4 +254,9 @@ class CategoriesController extends GetxController {
   RxList<Category> get getCategoriesList {
     return _categories;
   }
+
+  void refreshCategories() {
+    stateManager.removeAllRows();
+    initCategories();
+  }
 }

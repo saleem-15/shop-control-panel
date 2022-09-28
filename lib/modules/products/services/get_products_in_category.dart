@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:shop_conrol_panel/models/product.dart';
 
-import '../../../constants/api_url.dart';
+import '../../../constants/api.dart';
 
 Future<void> getProductsInCategory(int categoryId) async {
   try {

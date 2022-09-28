@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../controllers/images_controller.dart';
 
+
 class DropImagesArea extends GetView<ImagesController> {
   const DropImagesArea({Key? key}) : super(key: key);
 

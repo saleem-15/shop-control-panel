@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:shop_conrol_panel/app_components/pagination/table_footer.dart';
 
-import '../../constants/table_constants.dart';
+import '../../constants/constants.dart';
 import 'customers_controller.dart';
 
 class CustomersScreen extends GetView<CustomersController> {
@@ -16,6 +17,15 @@ class CustomersScreen extends GetView<CustomersController> {
           'Customers',
           style: Theme.of(context).textTheme.headline4,
         ),
+        actions: [
+          IconButton(
+            onPressed: controller.refreshCustomers,
+            icon: Icon(
+              Icons.refresh,
+              color: Theme.of(context).iconTheme.color,
+            ),
+          ),
+        ],
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -26,6 +36,16 @@ class CustomersScreen extends GetView<CustomersController> {
           rows: controller.rows,
           onLoaded: controller.onPlutoGridInit,
           configuration: tableConfiguration,
+          createFooter: (stateManager) {
+            stateManager.setPageSize(CustomersController.pageSize, notify: false);
+            return Obx(
+              () => controller.isStateManagerInitialized.isTrue
+                  ? TableFooter(
+                      paginationController: controller.paginationController,
+                    )
+                  : const SizedBox.shrink(),
+            );
+          },
         ),
       ),
     );

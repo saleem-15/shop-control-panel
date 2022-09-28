@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 
-import '../../../constants/api_url.dart';
+import '../../../constants/api.dart';
 
 Future<List<PlutoRow>> getAllShippingTypesService() async {
   try {

@@ -4,7 +4,7 @@ import 'package:pluto_grid/pluto_grid.dart';
 import 'package:shop_conrol_panel/config/theme/light_theme_colors.dart';
 import 'package:shop_conrol_panel/modules/shipping/controllers/shipping_controller.dart';
 
-import '../../../constants/table_constants.dart';
+import '../../../constants/constants.dart';
 
 class ShippingScreen extends GetView<ShippingController> {
   const ShippingScreen({Key? key}) : super(key: key);
@@ -17,6 +17,15 @@ class ShippingScreen extends GetView<ShippingController> {
           'Shipping',
           style: Theme.of(context).textTheme.headline4,
         ),
+          actions: [
+          IconButton(
+            onPressed: controller.refreshShippingTypes,
+            icon: Icon(
+              Icons.refresh,
+              color: Theme.of(context).iconTheme.color,
+            ),
+          ),
+        ],
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),

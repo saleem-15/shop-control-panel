@@ -1,10 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:shop_conrol_panel/app_components/pagination/table_footer.dart';
 
-import '../../constants/table_constants.dart';
+import '../../constants/constants.dart';
 import 'orders_controller.dart';
 
 class OrdersScreen extends GetView<OrdersController> {
@@ -18,22 +17,34 @@ class OrdersScreen extends GetView<OrdersController> {
           'Orders',
           style: Theme.of(context).textTheme.headline4,
         ),
+        actions: [
+          IconButton(
+            onPressed: controller.refreshOrders,
+            icon: Icon(
+              Icons.refresh,
+              color: Theme.of(context).iconTheme.color,
+            ),
+          ),
+        ],
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Container(
-        // width: 500,
-        // height: 500,
+      body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: PlutoGrid(
           columns: controller.columns,
           rows: controller.rows,
-          // columnGroups: controller.columnGroups,
           onLoaded: controller.onPlutoGridInit,
-          onChanged: (PlutoGridOnChangedEvent event) {
-            log(event.toString());
-          },
           configuration: tableConfiguration,
+          createFooter: (stateManager) {
+            return Obx(
+              () => controller.isStateManagerInitialized.isTrue
+                  ? TableFooter(
+                      paginationController: controller.paginationController,
+                    )
+                  : const SizedBox.shrink(),
+            );
+          },
         ),
       ),
     );

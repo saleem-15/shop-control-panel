@@ -2,16 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../category/services/get_categories.dart';
 import '../services/add_new_product_service.dart';
 
 import '../../../app_components/custom_snackbar.dart';
 import '../../../models/category.dart';
 import 'images_controller.dart';
-import '../../category/categories_controller.dart';
 
 class AddNewProductsController extends GetxController {
   // if categories is loading
-  late final RxBool isLoading;
+  late final RxBool isLoading = true.obs;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late Function() goToProducts;
 
@@ -42,9 +42,9 @@ class AddNewProductsController extends GetxController {
   final sizes = <String>[].obs;
 
   @override
-  void onInit() {
-    initCategoriesList();
-    super.onInit();
+  Future<void> onReady() async {
+    await initCategories();
+    super.onReady();
   }
 
   void addNewColor() {
@@ -153,21 +153,28 @@ class AddNewProductsController extends GetxController {
     Get.find<ImagesController>().clearImagesList();
   }
 
+  Future<void> initCategories() async {
+    final categoriesData = await getCategoriesService();
+    categories = [...convertJsonToCategories(categoriesData)].obs;
+    chosenCategory = categories.first.name.obs;
+    isLoading(false);
+  }
+
   void initCategoriesList() {
-    final cateogiresController = Get.find<CategoriesController>();
+    // final cateogiresController = Get.find<CategoriesController>();
 
-    isLoading = cateogiresController.isLoading;
+    // isLoading = cateogiresController.isLoading;
 
-    categories = cateogiresController.getCategoriesList;
+    // categories = cateogiresController.getCategoriesList;
 
-    isLoading.listen((isLoadingValue) {
-      if (isLoadingValue == false) {
-        return;
-      }
-      if (categories.isNotEmpty) {
-        chosenCategory = categories.first.name.obs;
-      }
-    });
+    // isLoading.listen((isLoadingValue) {
+    //   if (isLoadingValue == false) {
+    //     return;
+    //   }
+    //   if (categories.isNotEmpty) {
+    //     chosenCategory = categories.first.name.obs;
+    //   }
+    // });
 
     /// if categories are already loaded
     // if (cateogiresController.isLoading.isFalse) {

@@ -1,17 +1,31 @@
+import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:shop_conrol_panel/modules/customers/customers_controller.dart';
 
-import '../../../constants/api_url.dart';
+import '../../../constants/api.dart';
 
-Future<List<PlutoRow>> fetchCustomersService() async {
-
+Future<List<PlutoRow>> fetchCustomersService(int pageNum, int numOfCustomersPerPage) async {
   try {
-    final response = await dio.get(CUSTOMERS_PATH);
-    final data = response.data['Data'];
-    log(response.data.toString());
+    final response = await dio.get(
+      CUSTOMERS_PATH,
+      queryParameters: {
+        'page': pageNum,
+        'paginate_num': numOfCustomersPerPage,
+      },
+    );
 
+    final data = response.data['data'];
+    final metaData = response.data['meta'];
+    final numOfPages = metaData['last_page'] as int;
+    final numOfAllCustomers = metaData['total'] as int;
+
+    Get.find<CustomersController>().setAllCustomersNumber(numOfAllCustomers);
+    Get.find<CustomersController>().setNumOfPages(numOfPages);
+
+    log(response.data.toString());
     return _convertDataToCustomerRows(data);
   } on DioError catch (e) {
     log(e.response!.data.toString());

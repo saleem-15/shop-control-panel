@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:shop_conrol_panel/app_components/helpers.dart';
 
 import '../../../app_components/custom_snackbar.dart';
-import '../../../constants/api_url.dart';
+import '../../../constants/api.dart';
 
 ///returnes true if the category was added successfully
 Future<bool> addNewCategoryService(File image, String name) async {

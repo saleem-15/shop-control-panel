@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:pluto_grid/pluto_grid.dart';
-import 'package:shop_conrol_panel/constants/api_url.dart';
+import 'package:shop_conrol_panel/constants/api.dart';
 import 'package:shop_conrol_panel/models/category.dart';
 
 Future<dynamic> getCategoriesService() async {

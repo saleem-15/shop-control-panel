@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../config/theme/my_styles.dart';
 import '../categories_controller.dart';
-import 'drop_image_area.dart';
+import 'drop_image_area_widget.dart';
 
 class AddNewCategoryDialog extends GetView<CategoriesController> {
   const AddNewCategoryDialog({Key? key}) : super(key: key);

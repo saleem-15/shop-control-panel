@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
@@ -15,6 +13,7 @@ class ShippingController extends GetxController {
   late final List<PlutoColumn> columns;
   final List<PlutoRow> rows = [];
 
+  bool isStateManagerInitialized = false;
   late PlutoGridStateManager stateManager;
 
   @override
@@ -114,7 +113,7 @@ class ShippingController extends GetxController {
   Future<void> initShippingTypes() async {
     stateManager.setShowLoading(true);
     final productsRows = await getAllShippingTypesService();
-    stateManager.removeAllRows();
+
     stateManager.appendRows(productsRows);
     isLoading(false);
     stateManager.setShowLoading(false);
@@ -122,6 +121,15 @@ class ShippingController extends GetxController {
 
   void onPlutoGridInit(PlutoGridOnLoadedEvent event) {
     stateManager = event.stateManager;
+
+    if (!isStateManagerInitialized) {
+      initShippingTypes();
+    }
+    isStateManagerInitialized = true;
+  }
+
+  void refreshShippingTypes() {
+    stateManager.removeAllRows();
     initShippingTypes();
   }
 }

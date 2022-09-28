@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../app_components/custom_snackbar.dart';
 
+
 class ImagesController extends GetxController {
   RxBool dragging = false.obs;
   final List<File> _imagesList = <File>[].obs;

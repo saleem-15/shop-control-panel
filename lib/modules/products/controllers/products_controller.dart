@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:shop_conrol_panel/app_components/pagination/pagination_controller.dart';
 import 'add_new_products_controller.dart';
-import 'package:shop_conrol_panel/modules/products/services/get_all_products_service.dart';
+import 'package:shop_conrol_panel/modules/products/services/get_products_service.dart';
 
 import '../../../app_components/actions.dart';
 import '../services/delete_row.dart';
@@ -13,8 +16,13 @@ class ProductsController extends GetxController {
   late final List<PlutoColumn> columns;
   final List<PlutoRow> rows = [];
 
-  late PlutoGridStateManager stateManager;
+  RxBool isStateManagerInitialized = false.obs;
+  static late PlutoGridStateManager stateManager;
   PageController pageController = PageController();
+
+  late final PaginationController paginationController;
+
+  static const int pageSize = 3;
 
   @override
   void onInit() {
@@ -69,8 +77,6 @@ class ProductsController extends GetxController {
       PlutoColumn(
         enableContextMenu: false,
         width: 150,
-        // frozen: PlutoColumnFrozen.end,
-
         enableColumnDrag: false,
         title: '',
         enableDropToResize: false,
@@ -85,6 +91,7 @@ class ProductsController extends GetxController {
         ),
       ),
     ];
+
     super.onInit();
   }
 
@@ -122,17 +129,40 @@ class ProductsController extends GetxController {
     updatProductService(productId, columnIndex, newValue);
   }
 
-  Future<void> initProducts() async {
+  Future<void> fetchProducts(int pageNum, int numOfItemsPerPage) async {
     stateManager.setShowLoading(true);
-    final productsRows = await getAllProductsService();
-    stateManager.removeAllRows();
+    final productsRows = await getProductsService(pageNum, numOfItemsPerPage);
+
     stateManager.appendRows(productsRows);
+
     isLoading(false);
     stateManager.setShowLoading(false);
   }
 
   void onPlutoGridInit(PlutoGridOnLoadedEvent event) {
     stateManager = event.stateManager;
-    initProducts();
+
+    if (!isStateManagerInitialized.value) {
+      paginationController = PaginationController(
+        stateManager,
+        pageSize,
+        fetchProducts,
+      );
+      isStateManagerInitialized.value = true;
+    }
+    paginationController.initStateManager(stateManager);
+  }
+
+  /// reloads all the products from the server again
+  void refreshProducts() {
+    paginationController.refreshItems();
+  }
+
+  void setAllProductsNumber(int numOfAllProducts) {
+    paginationController.setAllItemsNumber(numOfAllProducts);
+  }
+
+  void setNumOfPages(int numOfPages) {
+    paginationController.setNumOfPages(numOfPages);
   }
 }
