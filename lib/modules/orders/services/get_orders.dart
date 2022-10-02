@@ -55,7 +55,7 @@ Future<List<PlutoRow>> _convertDataToOrderRows(List data) async {
                       : 'Canceled',
         ),
         'date': PlutoCell(value: order['date'] as String),
-        'address': PlutoCell(value: order['address']['address'] as String),
+        'address': PlutoCell(value: order['address'] as String),
       },
     );
 

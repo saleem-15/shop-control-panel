@@ -18,12 +18,12 @@ class TableFooter extends StatelessWidget {
     final void Function(int selectedPageNum) setSelectedPage = paginationController.setSelectedPage;
 
     return Container(
-      width: double.infinity,
-      height: 60,
+      height: 50,
       alignment: Alignment.centerRight,
       child: Obx(
-        () => Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+        () => ListView(
+          scrollDirection: Axis.horizontal,
+          // mainAxisAlignment: MainAxisAlignment.end,
           children: [
             ...List.generate(
               numOfPages.value,

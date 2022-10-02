@@ -5,6 +5,7 @@ import 'package:shop_conrol_panel/modules/orders/components/status.dart';
 
 import 'services/get_orders.dart';
 
+// TODO update order status
 class OrdersController extends GetxController {
   final isLoading = true.obs;
   final List<PlutoColumn> columns = <PlutoColumn>[

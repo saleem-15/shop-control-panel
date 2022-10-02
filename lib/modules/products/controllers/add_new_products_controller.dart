@@ -136,7 +136,7 @@ class AddNewProductsController extends GetxController {
         await addNewProductService(categoryId, name, price, quantity, description, colors, sizes, images);
 
     if (isSuccessfullyAdded) {
-      clearAllFields();
+      // clearAllFields();
     }
   }
 

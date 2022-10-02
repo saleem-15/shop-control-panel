@@ -52,6 +52,7 @@ class PaginationController extends GetxController {
     stateManager.setPage(_currentPageNum.value);
 
     log('selected page: $_currentPageNum');
+    
 
     /// if the selected page is not loaded then => download it
     if (!isPageLoaded(_currentPageNum.value)) {

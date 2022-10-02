@@ -22,7 +22,7 @@ class ProductsController extends GetxController {
 
   late final PaginationController paginationController;
 
-  static const int pageSize = 3;
+  static const int pageSize = 7;
 
   @override
   void onInit() {
