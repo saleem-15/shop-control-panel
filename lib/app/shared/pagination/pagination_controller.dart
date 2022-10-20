@@ -17,29 +17,18 @@ class PaginationController extends GetxController {
   final RxInt _numOfPages = 1.obs;
   RxInt get numOfPages => _numOfPages;
 
-  final Future Function(int selectedPageNum, int numOfItemsPerPage) fetchItems;
-
-  /// this map used to determine if the page isLoaded.
-  Map<int, bool> isLoaded = {};
+  /// the function is called when loading a new page (in pagination)
+  final Future<List<PlutoRow>> Function(int pageNum, int numOfItemsPerPage) fetchItems;
 
   /// pages are stores in this map
   Map<int, List<PlutoRow>> pages = {};
+  bool isPageLoaded(int pageNum) => pages[pageNum] == null ? false : true;
 
   @override
   void onInit() {
     stateManager.setPageSize(numOfItemsPerPage, notify: false);
     fetchItems(currentPageNum.value, numOfItemsPerPage);
     super.onInit();
-  }
-
-  bool isPageLoaded(int pageNum) {
-    final isPageLoaded = isLoaded[pageNum] ?? false;
-
-    return isPageLoaded;
-  }
-
-  void setIsLoaded(int pageNum) {
-    isLoaded[pageNum] = true;
   }
 
   void setAllItemsNumber(int numOfAllItems) {
@@ -50,19 +39,26 @@ class PaginationController extends GetxController {
     _numOfPages(numOfPages);
   }
 
+  /// replace the old page with the newly selected page
   Future<void> setSelectedPage(int selectedPageNum) async {
     _currentPageNum.value = selectedPageNum;
-    stateManager.setPage(_currentPageNum.value);
-    // stateManager.rows = pages[selectedPageNum];
-
     log('selected page: $_currentPageNum');
 
     /// if the selected page is not loaded then => download it
     if (!isPageLoaded(_currentPageNum.value)) {
-      await fetchItems(_currentPageNum.value, numOfItemsPerPage);
-
-      setIsLoaded(_currentPageNum.value);
+      await loadPage(selectedPageNum);
     }
+    stateManager.removeAllRows(notify: false);
+    stateManager.appendRows(pages[selectedPageNum]!);
+  }
+
+  Future<void> loadPage(int selectedPageNum) async {
+    stateManager.setShowLoading(true);
+
+    final List<PlutoRow> newPageRows = await fetchItems(_currentPageNum.value, numOfItemsPerPage);
+    stateManager.setShowLoading(false);
+
+    pages[selectedPageNum] = newPageRows;
   }
 
   void initStateManager(PlutoGridStateManager stateManager) {
@@ -70,9 +66,10 @@ class PaginationController extends GetxController {
     setSelectedPage(_currentPageNum.value);
   }
 
+  /// reomoves all the items stored and downloads the first page
   void refreshItems() {
     stateManager.removeAllRows();
-    isLoaded.clear();
+    pages.clear();
     _currentPageNum(1);
     setSelectedPage(_currentPageNum.value);
   }

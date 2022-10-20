@@ -7,7 +7,6 @@ import 'services/get_orders.dart';
 
 // TODO update order status
 class OrdersController extends GetxController {
-  final isLoading = true.obs;
   final List<PlutoColumn> columns = <PlutoColumn>[
     PlutoColumn(
       enableContextMenu: false,
@@ -68,8 +67,7 @@ class OrdersController extends GetxController {
         ],
         enableColumnFilter: true,
       ),
-      renderer: (rendererContext) =>
-          Status(status: rendererContext.cell.value.toString()),
+      renderer: (rendererContext) => Status(status: rendererContext.cell.value.toString()),
     ),
   ];
   List<PlutoRow> rows = <PlutoRow>[];
@@ -97,12 +95,8 @@ class OrdersController extends GetxController {
   }
 
   /// this method should be called by the pagination controller only
-  Future<void> fetchOrders(int pageNum, int numOfItemsPerPage) async {
-    stateManager.setShowLoading(true);
-    final orders = await getOrdersService(pageNum, numOfItemsPerPage);
-    stateManager.appendRows(orders);
-    stateManager.setShowLoading(false);
-    isLoading.value = false;
+  Future<List<PlutoRow>> fetchOrders(int pageNum, int numOfItemsPerPage) async {
+    return await getOrdersService(pageNum, numOfItemsPerPage);
   }
 
   void setAllOrdersNumber(int numOfAllOrders) {

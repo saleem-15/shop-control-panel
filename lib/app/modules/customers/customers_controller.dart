@@ -65,11 +65,8 @@ class CustomersController extends GetxController {
   static const int pageSize = 3;
 
   /// this method should be called from the [PaginationController] only
-  Future<void> fetchCustomers(int pageNum, int numOfCustomersPerPage) async {
-    stateManager.setShowLoading(true);
-    final rows = await fetchCustomersService(pageNum, numOfCustomersPerPage);
-    stateManager.appendRows(rows);
-    stateManager.setShowLoading(false);
+  Future<List<PlutoRow>> fetchCustomers(int pageNum, int numOfCustomersPerPage) async {
+    return await fetchCustomersService(pageNum, numOfCustomersPerPage);
   }
 
   void onPlutoGridInit(PlutoGridOnLoadedEvent event) {
