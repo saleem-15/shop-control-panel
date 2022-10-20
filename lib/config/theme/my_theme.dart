@@ -1,86 +1,65 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../../storage/my_shared_pref.dart';
-import 'dark_theme_colors.dart';
 import 'light_theme_colors.dart';
 import 'my_styles.dart';
 
+// ignore_for_file: deprecated_member_use
+
 class MyTheme {
-  static getThemeData({required bool isLight}) {
+  static getThemeData() {
     return ThemeData(
       // main color (app bar,tabs..etc)
       colorScheme: const ColorScheme.light().copyWith(
         primary: myBlack,
       ),
 
-      primaryColor: isLight ? LightThemeColors.primaryColor : DarkThemeColors.primaryColor,
-      // secondary color (for checkbox,float button, radio..etc)
-      accentColor: isLight ? LightThemeColors.accentColor : DarkThemeColors.accentColor,
+      primaryColor: LightThemeColors.primaryColor, // secondary color (for checkbox,float button, radio..etc)
+      accentColor: LightThemeColors.accentColor,
       // color contrast (if the theme is dark text should be white for example)
-      brightness: isLight ? Brightness.light : Brightness.dark,
+      brightness: Brightness.light,
       // card widget background color
-      cardColor: isLight ? LightThemeColors.cardColor : DarkThemeColors.cardColor,
+      cardColor: LightThemeColors.cardColor,
       // hint text color
-      hintColor: isLight ? LightThemeColors.hintTextColor : DarkThemeColors.hintTextColor,
+      hintColor: LightThemeColors.hintTextColor,
       // divider color
-      dividerColor: isLight ? LightThemeColors.dividerColor : DarkThemeColors.dividerColor,
+      dividerColor: LightThemeColors.dividerColor,
       // app background color
-      backgroundColor: isLight ? LightThemeColors.backgroundColor : DarkThemeColors.backgroundColor,
-      scaffoldBackgroundColor:
-          isLight ? LightThemeColors.scaffoldBackgroundColor : DarkThemeColors.scaffoldBackgroundColor,
+      backgroundColor: LightThemeColors.backgroundColor,
+      scaffoldBackgroundColor: LightThemeColors.scaffoldBackgroundColor,
 
       // progress bar theme
-      progressIndicatorTheme: ProgressIndicatorThemeData(
-        color: isLight ? LightThemeColors.primaryColor : DarkThemeColors.primaryColor,
-      ),
+      progressIndicatorTheme: const ProgressIndicatorThemeData(color: LightThemeColors.primaryColor),
 
       // appBar theme
-      appBarTheme: MyStyles.getAppBarTheme(isLightTheme: isLight),
+      appBarTheme: MyStyles.getAppBarTheme(),
 
       // elevated button theme
-      elevatedButtonTheme: MyStyles.getElevatedButtonTheme(isLightTheme: isLight),
+      elevatedButtonTheme: MyStyles.getElevatedButtonTheme(),
 
       // text theme
-      textTheme: MyStyles.getTextTheme(isLightTheme: isLight),
+      textTheme: MyStyles.getTextTheme(),
 
       // chip theme
-      chipTheme: MyStyles.getChipTheme(isLightTheme: isLight),
+      chipTheme: MyStyles.getChipTheme(),
 
       // icon theme
-      iconTheme: MyStyles.getIconTheme(isLightTheme: isLight),
+      iconTheme: MyStyles.getIconTheme(),
 
       //divider
-      dividerTheme: MyStyles.getDividerTheme(isLightTheme: isLight),
+      dividerTheme: MyStyles.getDividerTheme(),
 
-      radioTheme: MyStyles.getRadioButtonTheme(isLightTheme: isLight),
+      radioTheme: MyStyles.getRadioButtonTheme(),
 
-      cardTheme: MyStyles.getCardTheme(isLightTheme: isLight),
+      cardTheme: MyStyles.getCardTheme(),
 
       // textField theme
-      // inputDecorationTheme: MyStyles.getInputDecorationTheme(isLightTheme: isLight),
+      // inputDecorationTheme: MyStyles.getInputDecorationTheme(Theme: ),
 
       //dialog
-      dialogTheme: MyStyles.getDialogTheme(isLightTheme: isLight),
+      dialogTheme: MyStyles.getDialogTheme(),
 
       //drawer (my custom menu)
-      drawerTheme: MyStyles.getDrawerThemeData(isLightTheme: isLight),
+      drawerTheme: MyStyles.getDrawerThemeData(),
     );
   }
-
-  /// update app theme and save theme type to shared pref
-  /// (so when the app is killed and up again theme will remain the same)
-  static changeTheme() {
-    // *) check if the current theme is light (default is light)
-    bool isLightTheme = MySharedPref.getThemeIsLight();
-    // *) store the new theme mode on get storage
-    MySharedPref.setThemeIsLight(!isLightTheme);
-    // *) let GetX change theme
-    Get.changeThemeMode(!isLightTheme ? ThemeMode.light : ThemeMode.dark);
-  }
-
-  /// check if the theme is light or dark
-  bool get getThemeIsLight => MySharedPref.getThemeIsLight();
 }

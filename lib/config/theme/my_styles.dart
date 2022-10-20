@@ -3,94 +3,81 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'dark_theme_colors.dart';
-import 'my_fonts.dart';
 import 'light_theme_colors.dart';
+import 'my_fonts.dart';
 
 class MyStyles {
   ///icons theme
-  static IconThemeData getIconTheme({required bool isLightTheme}) => IconThemeData(
-        color: isLightTheme ? LightThemeColors.iconColor : DarkThemeColors.iconColor,
-      );
-  static TabBarTheme getTabBarTheme({required bool isLightTheme}) => TabBarTheme(
-        indicator: BoxDecoration(
-          color: isLightTheme ? LightThemeColors.primaryColor : DarkThemeColors.primaryColor,
-        ),
+  static IconThemeData getIconTheme() => const IconThemeData(color: LightThemeColors.iconColor);
+  static TabBarTheme getTabBarTheme() => const TabBarTheme(
+        indicator: BoxDecoration(color: LightThemeColors.primaryColor),
       );
 
   ///app bar theme
-  static AppBarTheme getAppBarTheme({required bool isLightTheme}) => AppBarTheme(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.dark,
-          statusBarColor: Colors.transparent,
-        ),
-        elevation: 0,
-        titleTextStyle: getTextTheme(isLightTheme: isLightTheme).bodyText1!.copyWith(
-              color: Colors.white,
-              fontSize: MyFonts.appBarTittleSize,
-            ),
-        iconTheme: IconThemeData(
-            color: isLightTheme ? LightThemeColors.appBarIconsColor : DarkThemeColors.appBarIconsColor),
-        backgroundColor: isLightTheme ? LightThemeColors.appBarColor : DarkThemeColors.appbarColor,
-      );
+  static AppBarTheme getAppBarTheme() => AppBarTheme(
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark,
+        statusBarColor: Colors.transparent,
+      ),
+      elevation: 0,
+      titleTextStyle: getTextTheme().bodyText1!.copyWith(
+            color: Colors.white,
+            fontSize: MyFonts.appBarTittleSize,
+          ),
+      iconTheme: const IconThemeData(color: LightThemeColors.appBarIconsColor),
+      backgroundColor: LightThemeColors.appBarColor);
 
   ///text theme
-  static TextTheme getTextTheme({required bool isLightTheme}) => TextTheme(
+  static TextTheme getTextTheme() => TextTheme(
         button: MyFonts.buttonTextStyle.copyWith(fontSize: MyFonts.buttonTextSize),
         //
         bodyText1: (MyFonts.bodyTextStyle).copyWith(
-          fontWeight: FontWeight.bold,
-          fontSize: MyFonts.body1TextSize,
-          color: isLightTheme ? LightThemeColors.bodyTextColor : DarkThemeColors.bodyTextColor,
-        ),
+            fontWeight: FontWeight.bold,
+            fontSize: MyFonts.body1TextSize,
+            color: LightThemeColors.bodyTextColor),
         //
-        bodyText2: (MyFonts.bodyTextStyle).copyWith(
-          fontSize: MyFonts.body2TextSize,
-          color: isLightTheme ? LightThemeColors.bodyTextColor : DarkThemeColors.bodyTextColor,
-        ),
+        bodyText2: (MyFonts.bodyTextStyle)
+            .copyWith(fontSize: MyFonts.body2TextSize, color: LightThemeColors.bodyTextColor),
         //
         headline1: (MyFonts.headlineTextStyle).copyWith(
-          fontSize: MyFonts.headline1TextSize,
-          fontWeight: FontWeight.bold,
-          color: isLightTheme ? LightThemeColors.headlinesTextColor : DarkThemeColors.headlinesTextColor,
-        ),
+            fontSize: MyFonts.headline1TextSize,
+            fontWeight: FontWeight.bold,
+            color: LightThemeColors.headlinesTextColor),
         //
         headline2: (MyFonts.headlineTextStyle).copyWith(
             fontSize: MyFonts.headline2TextSize,
             fontWeight: FontWeight.bold,
-            color: isLightTheme ? LightThemeColors.headlinesTextColor : DarkThemeColors.headlinesTextColor),
+            color: LightThemeColors.headlinesTextColor),
         //
         headline3: (MyFonts.headlineTextStyle).copyWith(
             fontSize: MyFonts.headline3TextSize,
             fontWeight: FontWeight.bold,
-            color: isLightTheme ? LightThemeColors.headlinesTextColor : DarkThemeColors.headlinesTextColor),
+            color: LightThemeColors.headlinesTextColor),
         //
         headline4: (MyFonts.headlineTextStyle).copyWith(
             fontSize: MyFonts.headline4TextSize,
             fontWeight: FontWeight.bold,
-            color: isLightTheme ? LightThemeColors.headlinesTextColor : DarkThemeColors.headlinesTextColor),
+            color: LightThemeColors.headlinesTextColor),
         //
         headline5: (MyFonts.headlineTextStyle).copyWith(
             fontSize: MyFonts.headline5TextSize,
             fontWeight: FontWeight.bold,
-            color: isLightTheme ? LightThemeColors.headlinesTextColor : DarkThemeColors.headlinesTextColor),
+            color: LightThemeColors.headlinesTextColor),
         //
         headline6: (MyFonts.headlineTextStyle).copyWith(
             fontSize: MyFonts.headline6TextSize,
             fontWeight: FontWeight.w700,
-            color: isLightTheme ? LightThemeColors.headlinesTextColor : DarkThemeColors.headlinesTextColor),
-        caption: TextStyle(
-            color: isLightTheme ? LightThemeColors.captionTextColor : DarkThemeColors.captionTextColor,
-            fontSize: MyFonts.captionTextSize),
+            color: LightThemeColors.headlinesTextColor),
+        caption: TextStyle(color: LightThemeColors.captionTextColor, fontSize: MyFonts.captionTextSize),
       );
 
   // Chip theme
-  static ChipThemeData getChipTheme({required bool isLightTheme}) {
+  static ChipThemeData getChipTheme() {
     return ChipThemeData(
-      backgroundColor: isLightTheme ? LightThemeColors.chipBackground : DarkThemeColors.chipBackground,
+      backgroundColor: LightThemeColors.chipBackground,
       brightness: Brightness.light,
-      labelStyle: getChipTextStyle(isLightTheme: isLightTheme),
-      secondaryLabelStyle: getChipTextStyle(isLightTheme: isLightTheme).copyWith(color: Colors.white),
+      labelStyle: getChipTextStyle(),
+      secondaryLabelStyle: getChipTextStyle().copyWith(color: Colors.white),
       selectedColor: myBlack,
       disabledColor: Colors.white,
       padding: const EdgeInsets.all(5),
@@ -105,21 +92,21 @@ class MyStyles {
   }
 
   //Drawer Theme (I use this theme for my custom menu)
-  static DrawerThemeData getDrawerThemeData({required bool isLightTheme}) => const DrawerThemeData(
+  static DrawerThemeData getDrawerThemeData() => const DrawerThemeData(
         backgroundColor: LightThemeColors.menuColor,
         width: 200,
       );
 
   ///Chips text style
-  static TextStyle getChipTextStyle({required bool isLightTheme}) {
+  static TextStyle getChipTextStyle() {
     return MyFonts.chipTextStyle.copyWith(
       fontSize: MyFonts.chipTextSize,
-      color: isLightTheme ? LightThemeColors.chipTextColor : DarkThemeColors.chipTextColor,
+      color: LightThemeColors.chipTextColor,
     );
   }
 
   // elevated button text style
-  static MaterialStateProperty<TextStyle?>? getElevatedButtonTextStyle(bool isLightTheme,
+  static MaterialStateProperty<TextStyle?>? getElevatedButtonTextStyle(
       {bool isBold = true, double? fontSize}) {
     return MaterialStateProperty.resolveWith<TextStyle>(
       (Set<MaterialState> states) {
@@ -127,28 +114,23 @@ class MyStyles {
           return MyFonts.buttonTextStyle.copyWith(
               fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
               fontSize: fontSize ?? MyFonts.buttonTextSize,
-              color: isLightTheme ? LightThemeColors.buttonTextColor : DarkThemeColors.buttonTextColor);
+              color: LightThemeColors.buttonTextColor);
         } else if (states.contains(MaterialState.disabled)) {
           return MyFonts.buttonTextStyle.copyWith(
               fontSize: fontSize ?? MyFonts.buttonTextSize,
               fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              color: isLightTheme
-                  ? LightThemeColors.buttonDisabledTextColor
-                  : DarkThemeColors.buttonDisabledTextColor);
+              color: LightThemeColors.buttonDisabledTextColor);
         }
         return MyFonts.buttonTextStyle.copyWith(
             fontSize: fontSize ?? MyFonts.buttonTextSize,
             fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-            color: isLightTheme
-                ? LightThemeColors.buttonTextColor
-                : DarkThemeColors.buttonTextColor); // Use the component's default.
+            color: LightThemeColors.buttonTextColor); // Use the component's default.
       },
     );
   }
 
   //elevated button theme data
-  static ElevatedButtonThemeData getElevatedButtonTheme({required bool isLightTheme}) =>
-      ElevatedButtonThemeData(
+  static ElevatedButtonThemeData getElevatedButtonTheme() => ElevatedButtonThemeData(
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
@@ -159,48 +141,42 @@ class MyStyles {
           elevation: MaterialStateProperty.all(7),
           shadowColor: MaterialStateProperty.all(myBlack),
           padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.symmetric(vertical: 8.h)),
-          textStyle: getElevatedButtonTextStyle(isLightTheme),
+          textStyle: getElevatedButtonTextStyle(),
           backgroundColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states) {
               if (states.contains(MaterialState.pressed)) {
-                return isLightTheme
-                    ? LightThemeColors.buttonColor.withOpacity(0.5)
-                    : DarkThemeColors.buttonColor.withOpacity(0.5);
+                return LightThemeColors.buttonColor.withOpacity(0.5);
               } else if (states.contains(MaterialState.disabled)) {
-                return isLightTheme
-                    ? LightThemeColors.buttonDisabledColor
-                    : DarkThemeColors.buttonDisabledColor;
+                return LightThemeColors.buttonDisabledColor;
               }
-              return isLightTheme
-                  ? LightThemeColors.buttonColor
-                  : DarkThemeColors.buttonColor; // Use the component's default.
+              return LightThemeColors.buttonColor; // Use the component's default.
             },
           ),
         ),
       );
 
-  static getRadioButtonTheme({required bool isLightTheme}) => RadioThemeData(
+  static getRadioButtonTheme() => RadioThemeData(
         fillColor: MaterialStateProperty.all<Color>(
-          isLightTheme ? LightThemeColors.radioColor : DarkThemeColors.radioColor,
+          LightThemeColors.radioColor,
         ),
       );
 
-  static getDividerTheme({required bool isLightTheme}) => DividerThemeData(
-        color: isLightTheme ? LightThemeColors.dividerColor : DarkThemeColors.dividerColor,
+  static getDividerTheme() => const DividerThemeData(
+        color: LightThemeColors.dividerColor,
       );
 
-  static getDialogTheme({required bool isLightTheme}) => DialogTheme(
+  static getDialogTheme() => DialogTheme(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.r),
         ),
       );
-  static getCardTheme({required bool isLightTheme}) => CardTheme(
+  static getCardTheme() => CardTheme(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
       );
 
-  static InputDecorationTheme getInputDecorationTheme({required bool isLightTheme}) => InputDecorationTheme(
+  static InputDecorationTheme getInputDecorationTheme() => InputDecorationTheme(
         filled: true,
         fillColor: lightGrey,
         enabledBorder: OutlineInputBorder(
@@ -224,7 +200,7 @@ class MyStyles {
           borderSide: const BorderSide(color: lightGrey, width: 1.5),
         ),
       );
-  static InputDecoration getInputDecoration({required bool isLightTheme}) => InputDecoration(
+  static InputDecoration getInputDecoration() => InputDecoration(
         filled: true,
         fillColor: lightGrey,
         enabledBorder: OutlineInputBorder(
