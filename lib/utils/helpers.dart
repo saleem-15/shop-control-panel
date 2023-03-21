@@ -1,32 +1,38 @@
 import 'dart:developer';
 
-String formatErrorMsg(dynamic data) {
-  final messages = data['Messages'];
-  if (messages is int) {
-    return messages.toString();
+String formatErrorMsg(dynamic dioError) {
+  if (dioError is! Map) {
+    /// print the type of [data]
+    log(dioError.runtimeType.toString());
+    return dioError.toString();
+
+    /// now [data] is certainly a Map
   }
 
-  if (messages is String) {
-    return messages;
-  }
+  final errorsMap = dioError['Messages'];
 
-  // log(data.toString());
+  if (errorsMap is! Map) {
+    /// print the type of [errorsMap]
+    log(errorsMap.runtimeType.toString());
+    return errorsMap.toString();
+
+    /// now [errorsMap] is certainly a Map
+  }
 
   // log('error msg type: ${errorsMap.runtimeType}');
+  // for (var element in (data).keys) {
+  //   log(element.toString());
+  // }
+
   //the error map is Map<String,List<String>>
   String errorString = '';
 
-  for (var value in messages.values) {
+  for (var value in errorsMap.values) {
     for (var e in (value as List)) {
       log('value: $e');
       errorString += '$e\n';
     }
   }
 
-  if (errorString.endsWith('\n')) {
-    // remove the last (\n)
-    errorString = errorString.substring(0, errorString.length - 1);
-  }
-
-  return errorString;
+  return errorString.trim();
 }

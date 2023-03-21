@@ -8,16 +8,14 @@ import 'package:shop_conrol_panel/root.dart';
 
 import '../../app/modules/auth/controllers/auth_conroller.dart';
 import '../../app/modules/auth/controllers/signin_controller.dart';
-import '../../app/modules/auth/screens/signin_screen.dart';
+import 'app/modules/auth/screens/auth_screen.dart';
 import '../../app/modules/category/categories_controller.dart';
 import '../../app/modules/customers/customers_controller.dart';
 import '../../app/modules/orders/orders_controller.dart';
 import '../../app/modules/products/controllers/add_new_products_controller.dart';
 import '../../app/modules/products/controllers/images_controller.dart';
 import '../../app/modules/products/controllers/products_controller.dart';
-import 'app/modules/auth/controllers/auth_conroller.dart';
 import 'app/modules/auth/controllers/signup_controller.dart';
-import 'app/modules/auth/screens/signin_screen.dart';
 import 'app/modules/shipping/controllers/add_shipping_type_controller.dart';
 import 'app/modules/shipping/controllers/shipping_controller.dart';
 import 'app/storage/my_shared_pref.dart';
@@ -25,6 +23,7 @@ import 'config/theme/my_theme.dart';
 
 Future<void> main() async {
   await MySharedPref.init();
+  MySharedPref.setUserToken(null);
   initControllers();
   runApp(const Main());
 }
@@ -77,7 +76,7 @@ class Main extends StatelessWidget {
             assignId: true,
             id: 'auth_listener',
             builder: (controller) {
-              return controller.isUserSignedIn ? const MyApp() : const SigninScreen();
+              return controller.isUserSignedIn ? const MyApp() : AuthScreen();
             },
           ),
         ),

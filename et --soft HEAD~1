@@ -1,0 +1,47 @@
+[33mcommit 9969eb1eea74f1466a5192d31ffd66fff13272ef[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: saleem-15 <94238476+saleem-15@users.noreply.github.com>
+Date:   Thu Oct 20 12:32:06 2022 +0300
+
+    making commit before fixing a bug in pagination
+
+[33mcommit 04182fb0e8d3397577c4b57d8c61593cb742efa0[m
+Author: saleem-15 <94238476+saleem-15@users.noreply.github.com>
+Date:   Sun Oct 2 22:38:37 2022 +0300
+
+    commit before fixing a bug with pagination
+
+[33mcommit 63b87d81e6ce9e6c541c9a6df4ca2cd4e0e40041[m
+Author: saleem-15 <94238476+saleem-15@users.noreply.github.com>
+Date:   Wed Sep 28 22:08:57 2022 +0300
+
+    pagination is done
+
+[33mcommit 7f4f2ba53b1a646b2adb54ca53eb1f9b6fa09806[m
+Author: saleem-15 <94238476+saleem-15@users.noreply.github.com>
+Date:   Mon Sep 26 15:19:04 2022 +0300
+
+    shipping type is done
+
+[33mcommit f271ebc087c6fd7eb1d24bfb9f770f5705f62d81[m
+Author: saleem-15 <94238476+saleem-15@users.noreply.github.com>
+Date:   Sat Sep 24 13:53:20 2022 +0300
+
+    category works,products works (needs some fix from backend),order works (needs some fix from backend)
+
+[33mcommit d93aa8f3ca6791cba0593ea016281a36d4808ffd[m
+Author: saleem-15 <94238476+saleem-15@users.noreply.github.com>
+Date:   Sat Sep 24 09:54:47 2022 +0300
+
+    add new product
+
+[33mcommit d98ca71b9bfff633129fef00c10e03993d9e9792[m
+Author: saleem-15 <94238476+saleem-15@users.noreply.github.com>
+Date:   Tue Aug 30 14:02:57 2022 +0300
+
+    add New Category is done
+
+[33mcommit 3d8b8973dc26029273f92ad5c9bc28706ad8b3a2[m
+Author: saleem-15 <94238476+saleem-15@users.noreply.github.com>
+Date:   Tue Aug 30 11:10:05 2022 +0300
+
+    add New product is ready

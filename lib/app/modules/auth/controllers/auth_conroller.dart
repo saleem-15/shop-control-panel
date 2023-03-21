@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../storage/my_shared_pref.dart';
@@ -5,6 +6,7 @@ import '../services/logout_service.dart';
 
 class AuthController extends GetxController {
   bool isUserSignedIn = MySharedPref.getToken == null ? false : true;
+  final pageController = PageController();
 
   void tokenListener(dynamic token) {
     if (token == null) {
@@ -32,5 +34,21 @@ class AuthController extends GetxController {
     isUserSignedIn = false;
     logoutService();
     update(['auth_listener']);
+  }
+
+  void goToLoginForm() {
+    pageController.animateToPage(
+      0,
+      duration: const Duration(seconds: 1),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void goToSignUpForm() {
+    pageController.animateToPage(
+      1,
+      duration: const Duration(seconds: 1),
+      curve: Curves.easeInOut,
+    );
   }
 }

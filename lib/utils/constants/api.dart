@@ -2,9 +2,10 @@ import 'package:dio/dio.dart';
 
 import '../../app/storage/my_shared_pref.dart';
 
-const apiUrl = 'localhost';
-const apiFullUrl = 'http://localhost:80/laravel9/e-commerce/public/api';
-const apiPath = '/laravel9/e-commerce/public/api';
+const localIp = 'localhost';
+//! if u want to get files from the backend u must use the local ip instead of "localhost"
+// const localIp = '10.0.0.7';
+const apiFullUrl = 'http://$localIp/laravel9/e-commerce/public/api';
 
 const apikey = 'p@ssword123';
 
@@ -21,10 +22,9 @@ final dio = Dio(
 );
 
 //auth
-//
-const signIn = '/Auth/dashboard/login';
-const signUp = '/Auth/dashboard/register';
-const logout = '/Auth/dashboard/logout';
+const signIn = '/auth/dashboard/login';
+const signUp = '/auth/dashboard/register';
+const logout = '/auth/dashboard/logout';
 const checkisEmailUsed = '/Auth/user/email';
 
 // Customers

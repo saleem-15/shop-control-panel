@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../main.dart';
-import '../screens/signin_screen.dart';
 import '../services/sign_up_service.dart';
+import 'auth_conroller.dart';
 
 class SignupController extends GetxController {
   final emailController = TextEditingController();
@@ -55,6 +55,6 @@ class SignupController extends GetxController {
   }
 
   void goToSignin() {
-    Get.to(() => const SigninScreen());
+    Get.find<AuthController>().goToLoginForm();
   }
 }

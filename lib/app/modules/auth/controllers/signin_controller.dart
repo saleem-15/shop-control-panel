@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:shop_conrol_panel/app/modules/auth/controllers/auth_conroller.dart';
 
 import '../../../../main.dart';
-import '../screens/signup_screen.dart';
+import '../components/signup_form.dart';
 import '../services/sign_in_service.dart';
 
 class SigninController extends GetxController {
@@ -44,7 +45,7 @@ class SigninController extends GetxController {
   }
 
   void goToSignup() {
-    Get.to(() => const SignupScreen());
+    Get.find<AuthController>().goToSignUpForm();
   }
 
   void forgetPassword() {}

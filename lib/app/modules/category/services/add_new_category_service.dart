@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -14,14 +15,18 @@ Future<bool> addNewCategoryService(File image, String name) async {
       'image': await MultipartFile.fromFile(image.path),
     });
 
-    await dio.post(CATEGORY_PATH, data: data);
+    await dio.post(
+      CATEGORY_PATH,
+      data: data,
+    );
     CustomSnackbar.showCustomToast(
-        message: 'The category was added successfully');
+      message: 'The category was added successfully',
+    );
 
     return true;
   } on DioError catch (e) {
-    CustomSnackbar.showCustomErrorToast(
-        message: formatErrorMsg(e.response!.data));
+    log(e.toString());
+    CustomSnackbar.showCustomErrorToast(message: formatErrorMsg(e.response!.data));
     return false;
   }
 }

@@ -13,7 +13,6 @@ import '../services/update_product_service.dart';
 import 'add_new_products_controller.dart';
 
 class ProductsController extends GetxController {
-  RxBool isLoading = true.obs;
   late final List<PlutoColumn> columns;
   final List<PlutoRow> rows = [];
 
@@ -131,14 +130,8 @@ class ProductsController extends GetxController {
     updatProductService(productId, columnIndex, newValue);
   }
 
-  Future<void> fetchProducts(int pageNum, int numOfItemsPerPage) async {
-    stateManager.setShowLoading(true);
-    final productsRows = await getProductsService(pageNum, numOfItemsPerPage);
-
-    stateManager.appendRows(productsRows);
-
-    isLoading(false);
-    stateManager.setShowLoading(false);
+  Future<List<PlutoRow>> fetchProducts(int pageNum, int numOfItemsPerPage) async {
+    return await getProductsService(pageNum, numOfItemsPerPage);
   }
 
   void onPlutoGridInit(PlutoGridOnLoadedEvent event) {
