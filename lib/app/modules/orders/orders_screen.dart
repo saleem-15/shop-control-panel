@@ -7,8 +7,10 @@ import '../../../utils/constants/table_config.dart';
 import '../../shared/pagination/table_footer.dart';
 import 'orders_controller.dart';
 
-class OrdersScreen extends GetView<OrdersController> {
-  const OrdersScreen({Key? key}) : super(key: key);
+class OrdersScreen extends StatelessWidget {
+  OrdersScreen({super.key}) : controller = Get.put(OrdersController());
+
+  late final OrdersController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class OrdersScreen extends GetView<OrdersController> {
       appBar: AppBar(
         title: Text(
           'Orders',
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         actions: [
           IconButton(

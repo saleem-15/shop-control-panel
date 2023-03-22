@@ -90,27 +90,24 @@ class ShippingController extends GetxController {
   }
 
   void onFloatingActionButtonPressed() {
-    Get.dialog(const Center(child: AddNewShippingTypeDialog()));
+    Get.dialog(Center(child: AddNewShippingTypeDialog()));
   }
 
   Future<void> onCellValueChanged(PlutoGridOnChangedEvent event) async {
     final row = event.row!;
     final int columnIndex = event.columnIdx!;
     final PlutoCell cell = row.cells.values.elementAt(columnIndex);
-    final String shippingTypeId =
-        row.cells['shipping_type_id']!.value.toString();
+    final String shippingTypeId = row.cells['shipping_type_id']!.value.toString();
     final dynamic newValue = event.value;
     final dynamic oldValue = event.oldValue;
     final String columnId = cell.column.field;
 
-    final isUpdated = await updateShippingTypeService(
-        shippingTypeId, columnId, newValue.toString());
+    final isUpdated = await updateShippingTypeService(shippingTypeId, columnId, newValue.toString());
     // log(cell.column.field.toString());
 
     /// if the new value is not updated on server => (write the old value to the table)
     if (!isUpdated) {
-      stateManager.changeCellValue(cell, oldValue,
-          callOnChangedEvent: false, force: true);
+      stateManager.changeCellValue(cell, oldValue, callOnChangedEvent: false, force: true);
     }
   }
 

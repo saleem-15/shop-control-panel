@@ -34,21 +34,21 @@ class MyApp extends StatelessWidget {
                     builder: (context) {
                       switch (selectedIndex.value) {
                         case 0:
-                          return const OrdersScreen();
+                          return OrdersScreen();
                         case 1:
-                          return const ProductsScreen();
+                          return  ProductsScreen();
 
                         case 2:
-                          return const CategoryScreen();
+                          return  CategoryScreen();
 
                         case 3:
-                          return const CustomersScreen();
+                          return  CustomersScreen();
 
                         case 4:
-                          return const ShippingScreen();
-                          
+                          return ShippingScreen();
+
                         default:
-                          return const ProductsScreen();
+                          return  ProductsScreen();
                       }
                     },
                   );

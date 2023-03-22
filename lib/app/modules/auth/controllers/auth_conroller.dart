@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shop_conrol_panel/utils/constants/api.dart';
 
 import '../../../storage/my_shared_pref.dart';
 import '../services/logout_service.dart';
@@ -12,9 +13,11 @@ class AuthController extends GetxController {
     if (token == null) {
       isUserSignedIn = false;
       update(['auth_listener']);
+      changeAuthToken();
     } else {
       isUserSignedIn = true;
       update(['auth_listener']);
+      changeAuthToken();
     }
   }
 

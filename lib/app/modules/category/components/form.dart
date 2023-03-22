@@ -6,7 +6,7 @@ import '../categories_controller.dart';
 import 'drop_image_area_widget.dart';
 
 class CategoryInfoForm extends GetView<CategoriesController> {
-  const CategoryInfoForm({Key? key}) : super(key: key);
+  const CategoryInfoForm({super.key});
 
   @override
   Widget build(BuildContext context) {

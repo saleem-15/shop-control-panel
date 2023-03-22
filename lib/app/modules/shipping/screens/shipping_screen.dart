@@ -7,8 +7,10 @@ import '../../../../utils/constants/table_config.dart';
 import '../controllers/shipping_controller.dart';
 import '/config/theme/light_theme_colors.dart';
 
-class ShippingScreen extends GetView<ShippingController> {
-  const ShippingScreen({Key? key}) : super(key: key);
+class ShippingScreen extends StatelessWidget {
+  ShippingScreen({super.key}) : controller = Get.put(ShippingController());
+
+  late final ShippingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class ShippingScreen extends GetView<ShippingController> {
       appBar: AppBar(
         title: Text(
           'Shipping',
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         actions: [
           IconButton(

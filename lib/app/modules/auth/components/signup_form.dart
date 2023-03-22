@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,14 +8,14 @@ import 'package:shop_conrol_panel/utils/constants/assets.dart';
 
 import '../controllers/signup_controller.dart';
 
-
-class SignUpForm extends GetView<SignupController> {
-  const SignUpForm({
+class SignUpForm extends StatelessWidget {
+  SignUpForm({
     super.key,
     required this.isShowPassword,
-  });
+  }) : controller = Get.put(SignupController());
 
   final RxBool isShowPassword;
+  late final SignupController controller;
 
   @override
   Widget build(BuildContext context) {

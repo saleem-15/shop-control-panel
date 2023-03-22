@@ -7,8 +7,7 @@ import 'package:pluto_grid/pluto_grid.dart';
 import '../../../../utils/constants/api.dart';
 import '../orders_controller.dart';
 
-Future<List<PlutoRow>> getOrdersService(
-    int pageNum, int numOfOrderPerPage) async {
+Future<List<PlutoRow>> getOrdersService(int pageNum, int numOfOrderPerPage) async {
   try {
     final response = await dio.get(
       ORDER_PATH,
@@ -23,8 +22,9 @@ Future<List<PlutoRow>> getOrdersService(
     final numOfPages = metaData['last_page'] as int;
     final numOfAllOrders = metaData['total'] as int;
 
-    Get.find<OrdersController>().setNumOfPages(numOfPages);
-    Get.find<OrdersController>().setAllOrdersNumber(numOfAllOrders);
+    Get.find<OrdersController>()
+      ..setNumOfPages(numOfPages)
+      ..setAllOrdersNumber(numOfAllOrders);
 
     // log(response.data.toString());
     return _convertDataToOrderRows(data);

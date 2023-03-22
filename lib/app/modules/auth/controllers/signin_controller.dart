@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_conrol_panel/app/modules/auth/controllers/auth_conroller.dart';
 
-import '../../../../main.dart';
-import '../components/signup_form.dart';
+import '../../../../root.dart';
 import '../services/sign_in_service.dart';
 
 class SigninController extends GetxController {
@@ -25,7 +24,7 @@ class SigninController extends GetxController {
     final isSuccessfull = await signInService(email, password);
 
     if (isSuccessfull) {
-      Get.off(() => const Main());
+      Get.off(() => const MyApp());
     }
   }
 
@@ -47,10 +46,4 @@ class SigninController extends GetxController {
   void goToSignup() {
     Get.find<AuthController>().goToSignUpForm();
   }
-
-  void forgetPassword() {}
-
-  void signinWithGoogle() {}
-
-  void signinWithFacebook() {}
 }

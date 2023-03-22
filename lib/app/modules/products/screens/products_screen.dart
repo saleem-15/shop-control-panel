@@ -9,16 +9,20 @@ import '../controllers/products_controller.dart';
 import '/config/theme/light_theme_colors.dart';
 import 'add_new_products_screen.dart';
 
-class ProductsScreen extends GetView<ProductsController> {
-  const ProductsScreen({Key? key}) : super(key: key);
+class ProductsScreen extends StatelessWidget {
+  ProductsScreen({super.key}) : controller = Get.put(ProductsController());
+
+  late final ProductsController controller;
+
+  
 
   @override
   Widget build(BuildContext context) {
     return PageView(
       controller: controller.pageController,
       physics: const NeverScrollableScrollPhysics(),
-      children: const [
-        Products(),
+      children: [
+        const Products(),
         AddNewProductScreen(),
       ],
     );
@@ -36,7 +40,7 @@ class Products extends GetView<ProductsController> {
       appBar: AppBar(
         title: Text(
           'Products',
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         actions: [
           IconButton(

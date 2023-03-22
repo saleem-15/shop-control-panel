@@ -29,7 +29,7 @@ class CategoriesController extends GetxController {
   late final GlobalKey<FormState> formKey;
 
   /// used to pop the dialog without poping any snackBars/toast
-  late BuildContext dialogContext;
+  final dialogKey = GlobalKey();
 
   final RxList<Category> _categories = <Category>[].obs;
 
@@ -102,8 +102,7 @@ class CategoriesController extends GetxController {
 
   Future<bool> addNewCategory() async {
     if (image.value == null) {
-      CustomSnackbar.showCustomErrorSnackBar(
-          title: 'Error', message: 'Add an image first!!');
+      CustomSnackbar.showCustomErrorSnackBar(title: 'Error', message: 'Add an image first!!');
       return false;
     }
 
@@ -158,8 +157,7 @@ class CategoriesController extends GetxController {
     }
 
     /// not Already used
-    final bool isCategoryExists =
-        _categories.any((category) => category.name == name);
+    final bool isCategoryExists = _categories.any((category) => category.name == name);
 
     if (isCategoryExists) {
       CustomSnackbar.showCustomErrorSnackBar(
@@ -227,22 +225,26 @@ class CategoriesController extends GetxController {
     }
   }
 
-  void onFloatingActionButtonPressed() {
-    Get.dialog(const Center(child: AddNewCategoryDialog()));
+  void onFABPressed() {
+    Get.dialog(
+      Center(
+        child: AddNewCategoryDialog(
+          key: dialogKey,
+        ),
+      ),
+    );
   }
 
   Future<void> onAddNewCategoryButtonPressed() async {
     final isAddedSuccessfully = await addNewCategory();
 
     if (isAddedSuccessfully) {
-      /// pop the (addNewCategory dialog)
-      Navigator.pop(dialogContext);
+      /// pop the [AddNewCategoryDialog] dialog
+      Navigator.pop(dialogKey.currentContext!);
     }
   }
 
-  void setDialogContext(BuildContext context) {
-    dialogContext = context;
-  }
+
 
   Future<void> initCategories() async {
     stateManager.setShowLoading(true);
@@ -251,8 +253,9 @@ class CategoriesController extends GetxController {
     _categories.addAll(convertJsonToCategories(categoriesData));
     isLoading(false);
 
-    stateManager.appendRows(convertJsonToPlutoRows(categoriesData));
-    stateManager.setShowLoading(false);
+    stateManager
+      ..appendRows(convertJsonToPlutoRows(categoriesData))
+      ..setShowLoading(false);
   }
 
   RxList<Category> get getCategoriesList {

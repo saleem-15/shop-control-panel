@@ -7,9 +7,12 @@ import 'package:shop_conrol_panel/config/theme/my_styles.dart';
 import '../components/form.dart';
 import '../components/images_area.dart';
 import '../controllers/add_new_products_controller.dart';
+import '../controllers/images_controller.dart';
 
-class AddNewProductScreen extends GetView<AddNewProductsController> {
-  const AddNewProductScreen({Key? key}) : super(key: key);
+class AddNewProductScreen extends StatelessWidget {
+  AddNewProductScreen({super.key}) : controller = Get.put(AddNewProductsController());
+
+  late final AddNewProductsController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -24,15 +27,14 @@ class AddNewProductScreen extends GetView<AddNewProductsController> {
         ),
         title: Text(
           'Add New Products',
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: Theme(
         data: Theme.of(context).copyWith(
-          inputDecorationTheme:
-              MyStyles.getInputDecorationTheme(),
+          inputDecorationTheme: MyStyles.getInputDecorationTheme(),
         ),
         child: SingleChildScrollView(
           //this is added to fix a bug

@@ -7,8 +7,14 @@ import '../../../config/theme/light_theme_colors.dart';
 import '../../../utils/constants/table_config.dart';
 import 'categories_controller.dart';
 
-class CategoryScreen extends GetView<CategoriesController> {
-  const CategoryScreen({Key? key}) : super(key: key);
+class CategoryScreen extends StatelessWidget {
+  CategoryScreen({super.key})
+      : controller = Get.put(
+          CategoriesController(),
+          permanent: true,
+        );
+
+  late final CategoriesController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +22,7 @@ class CategoryScreen extends GetView<CategoriesController> {
       appBar: AppBar(
         title: Text(
           'Categories',
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         actions: [
           IconButton(
@@ -32,7 +38,7 @@ class CategoryScreen extends GetView<CategoriesController> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: LightThemeColors.floatingActionButtonColor,
-        onPressed: controller.onFloatingActionButtonPressed,
+        onPressed: controller.onFABPressed,
         child: const Icon(
           Icons.add,
           color: Colors.white,

@@ -48,8 +48,9 @@ class PaginationController extends GetxController {
     if (!isPageLoaded(_currentPageNum.value)) {
       await loadPage(selectedPageNum);
     }
-    stateManager.removeAllRows(notify: false);
-    stateManager.appendRows(pages[selectedPageNum]!);
+    stateManager
+      ..removeAllRows(notify: false)
+      ..appendRows(pages[selectedPageNum]!);
   }
 
   Future<void> loadPage(int selectedPageNum) async {

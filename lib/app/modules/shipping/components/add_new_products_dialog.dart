@@ -6,8 +6,10 @@ import 'package:shop_conrol_panel/config/theme/my_styles.dart';
 
 import '../controllers/add_shipping_type_controller.dart';
 
-class AddNewShippingTypeDialog extends GetView<AddNewShippingTypeController> {
-  const AddNewShippingTypeDialog({Key? key}) : super(key: key);
+class AddNewShippingTypeDialog extends StatelessWidget {
+  AddNewShippingTypeDialog({super.key}) : controller = Get.put(AddNewShippingTypeController());
+
+  late final AddNewShippingTypeController controller;
 
   static const spaceBetweenFields = 30.0;
 
@@ -34,7 +36,7 @@ class AddNewShippingTypeDialog extends GetView<AddNewShippingTypeController> {
                   children: [
                     Text(
                       'Add New Shipping Type',
-                      style: Theme.of(context).textTheme.headline5,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(
                       height: 20,

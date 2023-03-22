@@ -11,6 +11,7 @@ import '../services/add_new_product_service.dart';
 import 'images_controller.dart';
 
 class AddNewProductsController extends GetxController {
+  final imagesController = Get.put(ImagesController());
   // if categories is loading
   late final RxBool isLoading = true.obs;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -37,7 +38,7 @@ class AddNewProductsController extends GetxController {
   String get description => descriptionController.text.trim();
   double get price => double.parse(priceController.text.trim());
   int get quantity => int.parse(quantityController.text.trim());
-  List<File> get images => Get.find<ImagesController>().imagesList;
+  List<File> get images => imagesController.imagesList;
 
   final colors = <String>[].obs;
   final sizes = <String>[].obs;
@@ -156,7 +157,7 @@ class AddNewProductsController extends GetxController {
     colors.clear();
     sizes.clear();
 
-    Get.find<ImagesController>().clearImagesList();
+    imagesController.clearImagesList();
   }
 
   Future<void> initCategories() async {

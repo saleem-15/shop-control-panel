@@ -22,7 +22,7 @@ class ProductsController extends GetxController {
 
   late final PaginationController paginationController;
 
-  static const int pageSize = 7;
+  static const int pageSize = 10;
 
   @override
   void onInit() {
@@ -131,7 +131,7 @@ class ProductsController extends GetxController {
   }
 
   Future<List<PlutoRow>> fetchProducts(int pageNum, int numOfItemsPerPage) async {
-    return await getProductsService(pageNum, numOfItemsPerPage);
+    return getProductsService(pageNum, numOfItemsPerPage);
   }
 
   void onPlutoGridInit(PlutoGridOnLoadedEvent event) {

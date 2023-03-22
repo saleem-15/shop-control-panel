@@ -8,13 +8,14 @@ import 'package:shop_conrol_panel/utils/constants/assets.dart';
 
 import '../controllers/signin_controller.dart';
 
-class LogInForm extends GetView<SigninController> {
-  const LogInForm({
+class LogInForm extends StatelessWidget {
+  LogInForm({
     super.key,
     required this.isShowPassword,
-  });
+  }) : controller = Get.put(SigninController());
 
   final RxBool isShowPassword;
+  late final SigninController controller;
 
   @override
   Widget build(BuildContext context) {

@@ -7,9 +7,10 @@ import '../../../utils/constants/table_config.dart';
 import '../../shared/pagination/table_footer.dart';
 import 'customers_controller.dart';
 
-class CustomersScreen extends GetView<CustomersController> {
-  const CustomersScreen({Key? key}) : super(key: key);
+class CustomersScreen extends StatelessWidget {
+  CustomersScreen({super.key}) : controller = Get.put(CustomersController());
 
+  late final CustomersController controller;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

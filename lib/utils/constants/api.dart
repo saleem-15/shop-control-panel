@@ -21,6 +21,11 @@ final dio = Dio(
   ),
 );
 
+/// notifies the http client about the change on the auth token
+void changeAuthToken() {
+  dio.options.headers['Authorization'] = 'Bearer ${MySharedPref.getToken}';
+}
+
 //auth
 const signIn = '/auth/dashboard/login';
 const signUp = '/auth/dashboard/register';

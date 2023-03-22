@@ -96,7 +96,7 @@ class OrdersController extends GetxController {
 
   /// this method should be called by the pagination controller only
   Future<List<PlutoRow>> fetchOrders(int pageNum, int numOfItemsPerPage) async {
-    return await getOrdersService(pageNum, numOfItemsPerPage);
+    return  getOrdersService(pageNum, numOfItemsPerPage);
   }
 
   void setAllOrdersNumber(int numOfAllOrders) {

@@ -7,8 +7,7 @@ import 'package:pluto_grid/pluto_grid.dart';
 import '../../../../utils/constants/api.dart';
 import '../customers_controller.dart';
 
-Future<List<PlutoRow>> fetchCustomersService(
-    int pageNum, int numOfCustomersPerPage) async {
+Future<List<PlutoRow>> fetchCustomersService(int pageNum, int numOfCustomersPerPage) async {
   try {
     final response = await dio.get(
       CUSTOMERS_PATH,
@@ -30,6 +29,7 @@ Future<List<PlutoRow>> fetchCustomersService(
     return _convertDataToCustomerRows(data);
   } on DioError catch (e) {
     log(e.response!.data.toString());
+
     return [];
   }
 }

@@ -7,11 +7,10 @@ import '../categories_controller.dart';
 import 'drop_image_area_widget.dart';
 
 class AddNewCategoryDialog extends GetView<CategoriesController> {
-  const AddNewCategoryDialog({Key? key}) : super(key: key);
+  const AddNewCategoryDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
-    controller.setDialogContext(context);
     return Card(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 30),
@@ -19,7 +18,6 @@ class AddNewCategoryDialog extends GetView<CategoriesController> {
           key: controller.formKey,
           child: SizedBox(
             width: 500,
-            // height: 400,
             child: SingleChildScrollView(
               controller: ScrollController(),
               child: Column(
@@ -27,8 +25,7 @@ class AddNewCategoryDialog extends GetView<CategoriesController> {
                   TextFormField(
                     controller: controller.nameController,
                     validator: controller.nameValidator,
-                    decoration: MyStyles.getInputDecoration()
-                        .copyWith(
+                    decoration: MyStyles.getInputDecoration().copyWith(
                       hintText: 'Name',
                     ),
                   ),

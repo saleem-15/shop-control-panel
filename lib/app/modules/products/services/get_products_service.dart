@@ -8,7 +8,9 @@ import '../../../../utils/constants/api.dart';
 import '../controllers/products_controller.dart';
 
 Future<List<PlutoRow>> getProductsService(
-    int pageNum, int numOfProductsPerPage) async {
+  int pageNum,
+  int numOfProductsPerPage,
+) async {
   try {
     final response = await dio.get(
       PRODUCT_PATH,
@@ -23,8 +25,10 @@ Future<List<PlutoRow>> getProductsService(
     final numOfPages = metaData['last_page'] as int;
     final numOfAllProducts = metaData['total'] as int;
 
-    Get.find<ProductsController>().setNumOfPages(numOfPages);
-    Get.find<ProductsController>().setAllProductsNumber(numOfAllProducts);
+    Get.find<ProductsController>()
+      ..setNumOfPages(numOfPages)
+      ..setAllProductsNumber(numOfAllProducts);
+
     log(response.data.toString());
 
     return _convertDataToProductRows(data);
